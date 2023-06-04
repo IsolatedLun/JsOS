@@ -1,0 +1,101 @@
+@use '../abstracts/' as *;
+
+*,
+*::before,
+*::after {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+*:focus {
+	outline: 2px solid var(--clr-primary-400);
+	outline-offset: 3px;
+}
+
+html {
+	scroll-behavior: smooth;
+	color-scheme: dark;
+}
+
+body {
+	font-family: $global-FontFamily;
+	font-size: $global-FontSize;
+	background-color: $global-background-clr;
+
+	overflow-x: hidden;
+	text-rendering: optimizeLegibility;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	line-height: 1.6;
+}
+
+p {
+	line-height: 1.25;
+}
+
+a {
+	text-decoration: none;
+	color: inherit;
+}
+
+ul {
+	list-style: none;
+}
+
+input,
+button,
+select,
+textarea {
+	font-family: inherit;
+	font-size: var(--fs-350);
+}
+
+textarea {
+	white-space: pre-wrap;
+}
+
+img,
+video {
+	display: block;
+	width: 100%;
+	height: 100%;
+
+	object-fit: cover;
+	border-radius: inherit;
+
+	background-color: black;
+}
+
+canvas {
+	display: inline-block;
+	image-rendering: pixelated;
+	image-rendering: crisp-edges;
+}
+
+// Misc
+[class*='flex'] {
+	display: flex;
+}
+
+[class*='grid'] {
+	display: grid;
+}
+
+[data-mobile] {
+	display: none !important;
+}
+
+[data-hide='true'] {
+	display: none !important;
+}
+
+[data-visible='false'] {
+	visibility: hidden !important;
+}

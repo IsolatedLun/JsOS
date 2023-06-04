@@ -1,0 +1,1 @@
+export type Some<T> = T | null;

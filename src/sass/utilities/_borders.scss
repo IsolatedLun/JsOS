@@ -1,0 +1,9 @@
+@use '../abstracts/' as *;
+
+.border-radius-bevelled {
+	border-radius: $border-radius-bevelled;
+}
+
+.border-radius-max {
+	border-radius: $border-radius-max;
+}

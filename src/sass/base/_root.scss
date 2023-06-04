@@ -1,0 +1,39 @@
+@use '../abstracts/' as *;
+
+@each $keyName, $key in $active-theme {
+	@each $valKey, $val in $key {
+		.clr-#{$keyName}-#{$valKey} {
+			color: $val;
+		}
+	}
+}
+
+:root {
+	@each $name, $color in $active-theme {
+		@each $clr-key, $clr-val in $color {
+			--clr-#{$name}-#{$clr-key}: #{$clr-val};
+		}
+	}
+
+	@each $font, $size in $font-sizes-desktop {
+		--fs-#{$font}: #{$size};
+	}
+}
+
+@media (prefers-color-scheme: dark) {
+	@each $name, $color in $colors-dark {
+		@each $clr-key, $clr-val in $color {
+			.clr-#{$name}-#{$clr-key} {
+				color: #{$clr-val};
+			}
+		}
+	}
+
+	:root {
+		@each $name, $color in $colors-dark {
+			@each $clr-key, $clr-val in $color {
+				--clr-#{$name}-#{$clr-key}: #{$clr-val};
+			}
+		}
+	}
+}

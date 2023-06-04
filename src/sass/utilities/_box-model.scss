@@ -1,0 +1,72 @@
+$operator-keys: (
+	align-items,
+	align-content,
+	justify-content,
+	justify-items,
+	justify-self,
+	align-self,
+	place-items,
+	place-content
+);
+
+$operator-values: start, end, center, space-evenly, space-between;
+
+@each $op in $operator-keys {
+	@each $op-val in $operator-values {
+		.#{$op}-#{$op-val} {
+			#{$op}: #{$op-val};
+		}
+	}
+}
+
+$box-models: flex-direction;
+$box-values: column, row;
+
+@each $box-model in $box-models {
+	@each $val in $box-values {
+		.#{$box-model}-#{$val} {
+			#{$box-model}: #{$val};
+		}
+	}
+}
+
+:is(.flex, .grid)[data-grow='true'] > * {
+	width: 100%;
+}
+
+.flex-wrap {
+	flex-wrap: wrap;
+}
+
+.flex-grow-1 {
+	flex-grow: 1;
+}
+
+.flex-grow-0 {
+	flex-grow: 0;
+}
+
+.flex-row-reverse {
+	flex-direction: row-reverse;
+}
+
+$grid-ops: items, content, self;
+$grid-values: center, start, end;
+
+@each $op in $grid-ops {
+	@each $val in $grid-values {
+		.place-#{$op}-#{$val} {
+			place-#{$op}: $val;
+		}
+	}
+}
+
+@for $i from 1 through 5 {
+	.grid-template-columns-#{$i} {
+		grid-template-columns: repeat(#{$i}, 1fr);
+	}
+
+	.grid-column-#{$i} {
+		grid-column: #{$i};
+	}
+}

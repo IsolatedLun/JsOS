@@ -1,0 +1,10 @@
+@use '../abstracts/' as *; 
+
+.taskbar {
+    width: $taskbar-width;
+    background-color: $taskbar-background-clr;
+
+    .taskbar-grid {
+        grid-template-columns: repeat(auto-fill, minmax($taskbar-grid-file-width, 1fr));
+    }
+}

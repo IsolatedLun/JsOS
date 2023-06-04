@@ -1,0 +1,10 @@
+@mixin pseudoElement($content: '') {
+	content: $content;
+	position: absolute;
+}
+
+@mixin transformCenter($top: 50%, $left: 50%, $right: -50%, $bottom: -50%) {
+	top: $top;
+	left: $left;
+	transform: translate($right, $bottom);
+}

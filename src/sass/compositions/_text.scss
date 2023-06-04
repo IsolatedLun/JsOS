@@ -1,0 +1,20 @@
+@for $i from 1 through 5 {
+    .text-ellipsis-#{$i} {
+        display: -webkit-box;
+        -webkit-line-clamp: $i;
+        -webkit-box-orient: vertical;
+
+        overflow: hidden;
+    }
+}
+
+// Screen readers
+.visually-hidden {
+	clip: rect(0 0 0 0);
+	clip-path: inset(50%);
+	height: 1px;
+	overflow: hidden;
+	position: absolute;
+	white-space: nowrap;
+	width: 1px;
+}

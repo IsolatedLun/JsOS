@@ -1,0 +1,32 @@
+@use 'sass:color';
+@use "sass:map";
+@use "sass:list";
+
+$fontSizes: (200, 275, 300, 325, 350, 400, 450, 500, 600, 700, 800, 900);
+@function createFontSizes($baseFontSize, $multiplier) {
+	$temp: ();
+	@for $i from 1 through length($fontSizes) {
+		$current: list.nth($fontSizes, $i);		
+		$temp: map.set($temp, $current, $baseFontSize * $multiplier * ($current / 100));
+	};
+
+	@return $temp;
+}
+
+$font-sizes-desktop: createFontSizes(1rem, 0.25);
+$font-sizes-medium: createFontSizes(1rem, 0.225);
+$font-sizes-small: createFontSizes(1rem, 0.21);
+
+$font-weights: 100, 200, 400, 500, 600, 700, 800, 900, bold, normal, bolder, lighter, light;
+
+@each $fs, $val in $font-sizes-desktop {
+	.fs-#{$fs} {
+		font-size: var(--fs-#{$fs}) !important;
+	}
+}
+
+@each $type in $font-weights {
+	.fw-#{$type} {
+		font-weight: #{$type};
+	}
+}

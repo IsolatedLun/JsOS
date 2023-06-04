@@ -1,0 +1,54 @@
+@use 'sass:color';
+
+@use './colors.scss' as *;
+
+// Colors
+$clr-background-300: map-get($map: map-get($active-theme, $key: "background"), $key: 300);
+$clr-background-400: map-get($map: map-get($active-theme, $key: "background"), $key: 400);
+$clr-background-500: map-get($map: map-get($active-theme, $key: "background"), $key: 500);
+
+// Global
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600&display=swap');
+
+$global-FontSize: var(--fs-400);
+$global-FontFamily: system-ui;
+$global-background-clr: $clr-background-300;
+
+$border-radius-bevelled: 9px;
+$border-radius-max: 100vmax;
+
+$z-index-1: 999;
+$z-index-2: 9999;
+$z-index-3: 99999;
+$z-index-4: 999999;
+
+// Desktop
+$desktop-grid-file-width: 48px;
+
+// Taskbar
+$taskbar-background-clr: $clr-background-500;
+$taskbar-grid-file-width: 32px;
+$taskbar-width: 75vw;
+
+// Modules/Interactible/Button
+// $clr-button-primary: $clr-primary-400;
+// $clr-button-secondary: $clr-background-500;
+
+// $button-padding: 0.3rem 0.6rem;
+// $button-padding-tiny: 0.1rem 0.3rem;
+// $button-padding-small: 0.2rem 0.6rem;
+// $button-padding-big: 0.4rem 0.8rem;
+// $button-padding-huge: 0.8rem 1.2rem;
+
+// Modules/Interactible/Input
+// $clr-input: $clr-background-400;
+// $clr-input-neutral: $clr-background-500;
+// $clr-input-border-on-hov: $clr-primary-400;
+// $clr-input-border: $clr-background-500;
+
+// $clr-input-secondary: $clr-secondary-400;
+// $clr-input-dragNdrop: $clr-tertiary-400;
+
+// $input-box-shadow: 0 0 0px 3px;
+// $input-padding: 0.3rem 0.6rem;
+// $input-border-color-transition-duration: 375ms;

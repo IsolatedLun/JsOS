@@ -1,0 +1,1 @@
+export type GridPlacementTypes = 'start' | 'center' | 'end';

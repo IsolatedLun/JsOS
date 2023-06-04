@@ -1,0 +1,72 @@
+@use 'sass:string';
+@use 'sass:math';
+
+$i: 0;
+$max-sizes: 10;
+$base-spacing-size: 1em;
+
+$operators: inline, block, top, right, left, bottom;
+
+$logical-ops: inline, block;
+$logical-ops-vals: start, end;
+
+@for $_ from 1 through $max-sizes {
+	$i: $i + 1;
+	$size: $base-spacing-size * ($i * 0.5);
+
+	.padding-#{$i} {
+		padding: #{$size};
+	}
+
+	.margin-#{$i} {
+		margin: #{$size};
+	}
+
+	.gap-#{$i} {
+		gap: #{$size};
+	}
+
+	@each $op in $operators {
+		.padding-#{$op}-auto {
+			padding-#{$op}: auto;
+		}
+
+		.margin-#{$op}-auto {
+			margin-#{$op}: auto;
+		}
+
+		@each $log-op-val in $logical-ops-vals {
+			@if $op == 'inline' or $op == 'block' {
+				.padding-#{$op}-#{$log-op-val}-auto {
+					padding-#{$op}-#{$log-op-val}: auto;
+				}
+
+				.margin-#{$op}-#{$log-op-val}-auto {
+					margin-#{$op}-#{$log-op-val}: auto;
+				}
+			}
+		}
+	}
+
+	@each $op in $operators {
+		.padding-#{$op}-#{$i} {
+			padding-#{$op}: #{$size};
+		}
+
+		.margin-#{$op}-#{$i} {
+			margin-#{$op}: #{$size};
+		}
+	}
+
+	@each $log-op in $logical-ops {
+		@each $log-val in $logical-ops-vals {
+			.padding-#{$log-op}-#{$log-val}-#{$i} {
+				padding-#{$log-op}-#{$log-val}: #{$size};
+			}
+
+			.margin-#{$log-op}-#{$log-val}-#{$i} {
+				margin-#{$log-op}-#{$log-val}: #{$size};
+			}
+		}
+	}
+}

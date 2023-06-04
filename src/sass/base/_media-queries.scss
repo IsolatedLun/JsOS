@@ -1,0 +1,78 @@
+@use '../abstracts/' as *;
+
+@media screen and (max-width: #{$breakpoint-medium}) {
+	:root {
+		@each $font, $size in $font-sizes-medium {
+			--fs-#{$font}: #{$size};
+		}
+	}
+
+	@each $fs, $val in $font-sizes-medium {
+		.fs-#{$fs} {
+			font-size: var(--fs-#{$fs}) !important;
+		}
+	}
+}
+
+@media screen and (min-width: #{$breakpoint-small}) {
+	.state-indicator {
+		z-index: 1 !important;
+	}
+}
+
+@media screen and (max-width: #{$breakpoint-small}) {
+	:root {
+		@each $font, $size in $font-sizes-small {
+			--fs-#{$font}: #{$size};
+		}
+
+		// Classes
+		*.flex[data-collapse='true'] {
+			flex-direction: column !important;
+		}
+
+		*.grid[data-collapse='true'] {
+			--_mobile-grid-area: none;
+
+			grid-template-columns: 1fr !important;
+			grid-template-areas: var(--_mobile-grid-area, none) !important;
+		}
+
+		*.flex:is([data-mobile-center='true'], .center-on-mobile) {
+			justify-content: center;
+			align-items: center;
+		}
+
+		*.grid:is([data-mobile-center='true'], .center-on-mobile) {
+			place-items: center !important;
+		}
+
+		*[data-spacing-collapse] {
+			margin: 0;
+			padding: 0;
+		}
+
+		*[data-desktop] {
+			display: none !important;
+		}
+
+		*[data-mobile] {
+			display: block !important;
+		}
+
+		// Loops
+		@each $font, $size in $font-sizes-small {
+			--fs-#{$font}: #{$size};
+		}
+	}
+
+	@each $fs, $val in $font-sizes-small {
+		.fs-#{$fs} {
+			font-size: var(--fs-#{$fs}) !important;
+		}
+	}
+
+	.state-indicator {
+		z-index: 2 !important;
+	}
+}
