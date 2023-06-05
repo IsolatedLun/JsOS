@@ -28,6 +28,10 @@ export const ICON_PAUSE = '\uf04c';
 export const ICON_GRIP = '\uf58d';
 export const ICON_QUESTION_CIRCLE = '\uf059';
 
+export const ICON_FOLDER = '\uf07b';
+export const ICON_FILE = '\uf15b';
+export const ICON_TERMINAL = '\uf120';
+
 export const ICON_GRID_V = '\uf58e';
 export const ICON_GRID_H = '\uf58d';
 export const ICON_TABLE_CELLS = '\uf009';

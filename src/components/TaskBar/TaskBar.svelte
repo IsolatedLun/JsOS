@@ -1,9 +1,13 @@
 <script>
-	import File from "../File/File.svelte";
+	import { cubeCss } from "../../utils/cubeCss/cubeCss";
+	import Flex from "../Box/Flex/Flex.svelte";
+    import Unit from "../Unit/Unit.svelte";
 
 </script>
 <div class="[ taskbar ] [ margin-inline-auto border-radius-max ]">
-    <div class="[ taskbar-grid ]">
-        <File />
-    </div>
+    <Flex cls={cubeCss({utilClass: 'margin-inline-3'})} align='center'>
+        <div class="[ taskbar-grid ] [ grid ]">
+            <Unit />
+        </div>
+    </Flex>
 </div>

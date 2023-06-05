@@ -1,29 +1,34 @@
 import type { Some } from "../types";
 
+// =============
+// Units
 export enum OS_FileTypeEnum {
-    UNKNOWN,
-    ZIP,
-    CMD,
-    TXT,
-    BROWSE,
+    FILE,
     FOLDER,
+    EXE,
+    CMD
 }
 
 export interface OS_File {
-    icon: string;
-    contents: Some<File>;
+    name: string,
+    contents: Some<File>,
 
-    cell: number;
-    type: OS_FileTypeEnum;
+    type: OS_FileTypeEnum
 }
 
 export interface OS_Folder {
     name: string,
-    contents: File[],
-    cell: number;
-    type: OS_FileTypeEnum.FOLDER;
+    contents: OS_Unit[],
+
+    type: OS_FileTypeEnum.FOLDER
 }
 
+export type OS_Unit = OS_File | OS_Folder;
+// =============
+
+
+// =============
+// Preferences/Settings
 export enum OS_ThemeEnum {
     DARk,
     LIGHT
@@ -34,16 +39,17 @@ export enum OS_GridLayout {
     MEDIUM,
     LARGE
 }
+// =============
 
 export interface OS {
     file_system: {
-        files: (OS_File | OS_Folder)[],
-        recycle_bin: (OS_File | OS_Folder)[],
+        units: OS_Unit[],
+        recycle_bin: OS_Unit[],
         grid_layout: OS_GridLayout,
     },
 
     taskbar: {
-        references: OS_File[],
+        references: OS_Unit[],
         show_search: boolean;
     },
 
@@ -51,5 +57,4 @@ export interface OS {
         wallpaper: string;
         theme: OS_ThemeEnum;
     }
-
 }

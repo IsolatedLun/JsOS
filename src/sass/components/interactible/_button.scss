@@ -1,0 +1,94 @@
+@use 'sass:color';
+@use '../../abstracts/' as *;
+
+@mixin createButton($background) {
+    padding: $button-padding;
+    background-color: $background;
+
+    border: 1px solid transparent;
+    border-radius: $border-radius-bevelled;
+
+    cursor: pointer;
+
+    .overlay {
+        background-color: color.scale($background, $lightness: 50%);
+    }
+
+    &[data-attachments*='hologram'] {
+        $transparentBackground: transparentize($background, 0.55);
+
+        background-color: transparent;
+
+        &:is(:hover, :focus-visible) {
+            border: 1px solid $background;
+            background-color: $transparentBackground;
+        }
+
+        &[data-selected='true'] {
+            background-color: $background;
+        }
+    }
+
+    &[data-attachments*='hoverable'] {
+        background-color: transparent;
+        transition: background-color 120ms ease-in-out;
+
+        &:is(:hover, :focus-visible) {
+            background-color: $background;
+        }
+    }
+
+    &[data-attachments*='round'] {
+        border-radius: 50%;
+    }
+
+    &[data-disabled='true'] {
+        opacity: 0.5;
+        pointer-events: none;
+    }
+}
+
+.button {
+    &[data-variant='primary'] {
+        @include createButton($clr-button-primary);
+    }
+
+    &[data-variant='secondary'] {
+        @include createButton($clr-button-secondary);
+    }
+
+    position: relative;
+    overflow: hidden;
+
+    .overlay {
+        position: absolute;
+        width: 1rem;
+        aspect-ratio: 1;
+
+        scale: 1;
+        opacity: 1;
+        z-index: 9999;
+        border-radius: $border-radius-max;
+        pointer-events: none;
+
+        transform-origin: center;
+        animation: anim 0.35s linear forwards;
+    }
+}
+
+@keyframes anim {
+    0% {
+        scale: 0;
+        opacity: 1;
+    }
+
+    40% {
+        scale: 4;
+        opacity: 0.75;
+    }
+
+    100% {
+        scale: 4.5;
+        opacity: 0;
+    }
+}

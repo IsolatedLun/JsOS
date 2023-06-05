@@ -7,4 +7,8 @@
     .taskbar-grid {
         grid-template-columns: repeat(auto-fill, minmax($taskbar-grid-file-width, 1fr));
     }
+
+    .file__name {
+        display: none;
+    }
 }

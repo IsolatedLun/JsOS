@@ -23,18 +23,19 @@ $z-index-3: 99999;
 $z-index-4: 999999;
 
 // Desktop
-$desktop-grid-file-width: 48px;
+$desktop-grid-file-width: 82px;
 
 // Taskbar
 $taskbar-background-clr: $clr-background-500;
-$taskbar-grid-file-width: 32px;
+$taskbar-grid-file-width: 38px;
 $taskbar-width: 75vw;
 
 // Modules/Interactible/Button
-// $clr-button-primary: $clr-primary-400;
+$clr-button-primary: #329acf;
+$clr-button-secondary: $clr-background-500;
 // $clr-button-secondary: $clr-background-500;
 
-// $button-padding: 0.3rem 0.6rem;
+$button-padding: 0.15rem 0.3rem;
 // $button-padding-tiny: 0.1rem 0.3rem;
 // $button-padding-small: 0.2rem 0.6rem;
 // $button-padding-big: 0.4rem 0.8rem;

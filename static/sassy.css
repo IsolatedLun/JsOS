@@ -1899,7 +1899,7 @@ body {
   font-family: system-ui;
   font-size: var(--fs-400);
   background-color: hsl(0, 0%, 7%);
-  overflow-x: hidden;
+  overflow: hidden;
   text-rendering: optimizeLegibility;
 }
 
@@ -2519,7 +2519,7 @@ canvas {
 }
 
 .desktop-container .desktop-grid {
-  grid-template-columns: repeat(auto-fill, minmax(48px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(82px, 1fr));
 }
 
 .taskbar {
@@ -2527,12 +2527,131 @@ canvas {
   background-color: hsl(0, 0%, 22%);
 }
 .taskbar .taskbar-grid {
-  grid-template-columns: repeat(auto-fill, minmax(32px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(38px, 1fr));
+}
+.taskbar .file__name {
+  display: none;
 }
 
-.file {
-  background-color: red;
+.unit {
   aspect-ratio: 1;
+}
+
+.icon {
+  font-family: "Font Awesome 5 Free";
+  font-size: inherit;
+  font-weight: bold;
+}
+
+.context-menu {
+  opacity: 0;
+  pointer-events: none;
+  background-color: hsl(0, 0%, 15%);
+  border: 2px solid hsl(0, 0%, 22%);
+}
+.context-menu:is(:focus, :focus-visible, :focus-within) {
+  opacity: 1;
+  pointer-events: all;
+}
+
+.button {
+  position: relative;
+  overflow: hidden;
+}
+.button[data-variant=primary] {
+  padding: 0.15rem 0.3rem;
+  background-color: #329acf;
+  border: 1px solid transparent;
+  border-radius: 9px;
+  cursor: pointer;
+}
+.button[data-variant=primary] .overlay {
+  background-color: #99cde7;
+}
+.button[data-variant=primary][data-attachments*=hologram] {
+  background-color: transparent;
+}
+.button[data-variant=primary][data-attachments*=hologram]:is(:hover, :focus-visible) {
+  border: 1px solid #329acf;
+  background-color: rgba(50, 154, 207, 0.45);
+}
+.button[data-variant=primary][data-attachments*=hologram][data-selected=true] {
+  background-color: #329acf;
+}
+.button[data-variant=primary][data-attachments*=hoverable] {
+  background-color: transparent;
+  transition: background-color 120ms ease-in-out;
+}
+.button[data-variant=primary][data-attachments*=hoverable]:is(:hover, :focus-visible) {
+  background-color: #329acf;
+}
+.button[data-variant=primary][data-attachments*=round] {
+  border-radius: 50%;
+}
+.button[data-variant=primary][data-disabled=true] {
+  opacity: 0.5;
+  pointer-events: none;
+}
+.button[data-variant=secondary] {
+  padding: 0.15rem 0.3rem;
+  background-color: hsl(0, 0%, 22%);
+  border: 1px solid transparent;
+  border-radius: 9px;
+  cursor: pointer;
+}
+.button[data-variant=secondary] .overlay {
+  background-color: #9c9c9c;
+}
+.button[data-variant=secondary][data-attachments*=hologram] {
+  background-color: transparent;
+}
+.button[data-variant=secondary][data-attachments*=hologram]:is(:hover, :focus-visible) {
+  border: 1px solid hsl(0, 0%, 22%);
+  background-color: rgba(56, 56, 56, 0.45);
+}
+.button[data-variant=secondary][data-attachments*=hologram][data-selected=true] {
+  background-color: hsl(0, 0%, 22%);
+}
+.button[data-variant=secondary][data-attachments*=hoverable] {
+  background-color: transparent;
+  transition: background-color 120ms ease-in-out;
+}
+.button[data-variant=secondary][data-attachments*=hoverable]:is(:hover, :focus-visible) {
+  background-color: hsl(0, 0%, 22%);
+}
+.button[data-variant=secondary][data-attachments*=round] {
+  border-radius: 50%;
+}
+.button[data-variant=secondary][data-disabled=true] {
+  opacity: 0.5;
+  pointer-events: none;
+}
+.button .overlay {
+  position: absolute;
+  width: 1rem;
+  aspect-ratio: 1;
+  scale: 1;
+  opacity: 1;
+  z-index: 9999;
+  border-radius: 100vmax;
+  pointer-events: none;
+  transform-origin: center;
+  animation: anim 0.35s linear forwards;
+}
+
+@keyframes anim {
+  0% {
+    scale: 0;
+    opacity: 1;
+  }
+  40% {
+    scale: 4;
+    opacity: 0.75;
+  }
+  100% {
+    scale: 4.5;
+    opacity: 0;
+  }
 }
 
 /*# sourceMappingURL=sassy.css.map */
