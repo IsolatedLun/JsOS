@@ -41,10 +41,15 @@
     &[data-attachments*='round'] {
         border-radius: 50%;
     }
+    
 
     &[data-disabled='true'] {
         opacity: 0.5;
         pointer-events: none;
+    }
+
+    &[data-attachments*='pad-context-menu'] {
+        padding: $button-context-menu-padding;
     }
 }
 

@@ -13,7 +13,12 @@
 		dispatch('click', e);
 	}
 
+	function handleContextMenu(e: MouseEvent) {
+		dispatch('contextmenu', e);
+	}
+
 	export let cls = cubeCss({});
+	export let id: string = '';
 	export let variant = 'primary';
 	export let attachments: ButtonAttachments[] = [];
 	export let disabled = false;
@@ -30,12 +35,14 @@
 
 <button
 	bind:this={_this}
+	id={id}
 	class={_class}
 	data-variant={variant}
 	data-attachments={attachments.join(',')}
 	data-disabled={disabled}
 	data-selected={selected}
 	on:click={handleClick}
+	on:contextmenu={handleContextMenu}
 >
 	<slot />
 </button>

@@ -4,6 +4,8 @@ export function createDefaultOsUnit(): OS_Unit {
     return {
         contents: [],
         type: OS_FileTypeEnum.FOLDER,
-        name: 'New folder',
+        name: 'New Unit',
+        uuid: crypto.randomUUID(),
+        idx: 0,
     }
 }

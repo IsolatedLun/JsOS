@@ -23,7 +23,7 @@ export interface OS_Folder {
     type: OS_FileTypeEnum.FOLDER
 }
 
-export type OS_Unit = OS_File | OS_Folder;
+export type OS_Unit = (OS_File | OS_Folder) & { idx: number, uuid: string };
 // =============
 
 
@@ -42,10 +42,10 @@ export enum OS_GridLayout {
 // =============
 
 export interface OS {
-    file_system: {
+    fileSystem: {
         units: OS_Unit[],
-        recycle_bin: OS_Unit[],
-        grid_layout: OS_GridLayout,
+        recycleBin: OS_Unit[],
+        gridLayout: OS_GridLayout,
     },
 
     taskbar: {
@@ -54,7 +54,8 @@ export interface OS {
     },
 
     preferences: {
-        wallpaper: string;
+        background: string;
         theme: OS_ThemeEnum;
+        showExtensions: boolean;
     }
 }

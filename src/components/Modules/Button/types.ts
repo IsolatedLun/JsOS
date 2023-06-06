@@ -1,6 +1,8 @@
 export type ButtonAttachments =
 	| 'hologram'
 	| 'hollow'
+	| 'hoverable'
+	| 'pad-context-menu'
 	| 'round'
 	;
 

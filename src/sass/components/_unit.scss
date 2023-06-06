@@ -1,3 +1,7 @@
 .unit {
     aspect-ratio: 1;
+
+    .unit__name {
+        white-space: pre;
+    }
 }

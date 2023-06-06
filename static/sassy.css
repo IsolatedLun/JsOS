@@ -2529,12 +2529,15 @@ canvas {
 .taskbar .taskbar-grid {
   grid-template-columns: repeat(auto-fill, minmax(38px, 1fr));
 }
-.taskbar .file__name {
+.taskbar .unit .unit__name {
   display: none;
 }
 
 .unit {
   aspect-ratio: 1;
+}
+.unit .unit__name {
+  white-space: pre;
 }
 
 .icon {
@@ -2592,6 +2595,9 @@ canvas {
   opacity: 0.5;
   pointer-events: none;
 }
+.button[data-variant=primary][data-attachments*=pad-context-menu] {
+  padding: 0.3rem 0.6rem;
+}
 .button[data-variant=secondary] {
   padding: 0.15rem 0.3rem;
   background-color: hsl(0, 0%, 22%);
@@ -2625,6 +2631,9 @@ canvas {
 .button[data-variant=secondary][data-disabled=true] {
   opacity: 0.5;
   pointer-events: none;
+}
+.button[data-variant=secondary][data-attachments*=pad-context-menu] {
+  padding: 0.3rem 0.6rem;
 }
 .button .overlay {
   position: absolute;
