@@ -21,7 +21,12 @@ html {
 body {
 	font-family: $global-FontFamily;
 	font-size: $global-FontSize;
-	background-color: $global-background-clr;
+
+	background-image: url(
+		'https://rare-gallery.com/thumbnail/393884-windows-11-microsoft-background-colorful-4k-pc.jpg'
+	);
+	background-repeat: no-repeat;
+	background-size: 100%;
 
 	overflow: hidden;
 	text-rendering: optimizeLegibility;

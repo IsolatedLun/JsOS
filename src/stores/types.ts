@@ -5,8 +5,12 @@ import type { Some } from "../types";
 export enum OS_FileTypeEnum {
     FILE,
     FOLDER,
+
     EXE,
-    CMD
+    CMD,
+    TXT,
+    ZIP,
+    RECYCLE
 }
 
 export interface OS_File {
@@ -39,6 +43,11 @@ export enum OS_GridLayout {
     MEDIUM,
     LARGE
 }
+
+export interface OS_Preferences {
+    theme: OS_ThemeEnum;
+    showExtensions: boolean;
+}
 // =============
 
 export interface OS {
@@ -50,12 +59,8 @@ export interface OS {
 
     taskbar: {
         references: OS_Unit[],
-        show_search: boolean;
+        show_search: boolean,
     },
 
-    preferences: {
-        background: string;
-        theme: OS_ThemeEnum;
-        showExtensions: boolean;
-    }
+    preferences: OS_Preferences,
 }

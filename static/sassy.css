@@ -1898,7 +1898,9 @@ html {
 body {
   font-family: system-ui;
   font-size: var(--fs-400);
-  background-color: hsl(0, 0%, 7%);
+  background-image: url("https://rare-gallery.com/thumbnail/393884-windows-11-microsoft-background-colorful-4k-pc.jpg");
+  background-repeat: no-repeat;
+  background-size: 100%;
   overflow: hidden;
   text-rendering: optimizeLegibility;
 }

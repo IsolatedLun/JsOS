@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { fileTypeToIcon } from '../../consts/consts';
 	import { JsOS } from '../../stores/os';
-	import { OS_FileTypeEnum, type OS_Unit } from '../../stores/types';
+	import type { OS_Unit } from '../../stores/types';
 	import { cubeCss } from '../../utils/cubeCss/cubeCss';
 	import { createDefaultOsUnit } from '../../utils/defaultCreates';
 	import Flex from '../Box/Flex/Flex.svelte';
@@ -11,6 +11,7 @@
 	import Button from '../Modules/Button/Button.svelte';
 	import type { ButtonAttachments } from '../Modules/Button/types';
 	import Icon from '../Modules/Icon/Icon.svelte';
+	import { displayName } from './utils';
 
 	function handleContextMenu(e: MouseEvent) {
 		e.preventDefault();
@@ -52,19 +53,17 @@
 			contenteditable="false"
             spellcheck="false"
 		>
-			{#if props.type !== OS_FileTypeEnum.FOLDER}
-                {#if $JsOS.preferences.showExtensions}
-                    {props.name}
-                    {:else}
-                    {props.name.split('.')[0]}
-                {/if}
-                {:else}
-                {props.name}
-            {/if}
+			{displayName(props.name, $JsOS.preferences.showExtensions)}
 		</p>
 	</Flex>
 </Button>
 
 <ContextMenu bind:instance={ctx}>
 	<ContextMenuItem action={() => rename()}>Rename</ContextMenuItem>
+	<ContextMenuItem action={() => {
+		JsOS.recycleUnit(props);
+		return true;
+	}}>
+		Move to bin
+	</ContextMenuItem>
 </ContextMenu>

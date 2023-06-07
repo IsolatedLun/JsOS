@@ -1,5 +1,7 @@
 import { get, writable } from "svelte/store";
-import { OS_ThemeEnum, type OS, OS_GridLayout, type OS_Unit } from "./types";
+import { OS_ThemeEnum, type OS, OS_GridLayout, type OS_Unit, OS_FileTypeEnum, type OS_Folder } from "./types";
+import { _initiateChangeBackground, getExtension } from "./utils";
+import type { Result } from "../types";
 
 export function createOS() {
     let store = writable<OS>({
@@ -10,7 +12,6 @@ export function createOS() {
         },
         preferences: {
             theme: OS_ThemeEnum.DARk,
-            background: '',
             showExtensions: false
         },
         taskbar: {
@@ -21,43 +22,77 @@ export function createOS() {
 
     return {
         subscribe: store.subscribe,
+
+        // File System
         createUnit: (unit: OS_Unit) => store.update(os => {
             unit.idx = os.fileSystem.units.length;
 
             os.fileSystem.units.push(unit);
             return os;
         }),
-
+        setUnit: (unit: OS_Unit) => store.update(os => {
+            os.fileSystem.units[unit.idx] = unit;
+            return os
+        }),
         getUnitByIndex: (idx: number) => _getUnitByIndex(get(store), idx),
-        filterUnitsByName: (name: string) => _filterUnitsByName(get(store), name),
-        recycleUnit: (idx: number) => _recycleUnit(get(store), idx),
-        renameUnit: (idx: number, name: string) => store.update(() => _renameUnit(get(store), idx, name))
+        filterUnitsByNameFromFolder: (folder: OS_Folder, name: string) => _filterUnitsByNameFromFolder(folder, name),
+        recycleUnit: (unit: OS_Unit) => store.update(() => _recycleUnit(get(store), unit)),
+        renameUnit: (idx: number, name: string) => store.update(() => _renameUnit(get(store), idx, name)),
+
+        // Preferences
+        changeBackground: () => _initiateChangeBackground()
     }
 }
 
 export const JsOS = createOS();
 
 // ===========================================
-function _getUnitByIndex(store: OS, idx: number): OS_Unit {
-    return store.fileSystem.units[idx];
+function _getUnitByIndex(store: OS, idx: number): Result<OS_Unit, string> {
+    try {
+        return store.fileSystem.units[idx];
+    }
+
+    catch {
+        return 'File not found';
+    }
 }
 
-function _filterUnitsByName(store: OS, name: string): OS_Unit[] {
-    return store.fileSystem.units.filter(
+function _filterUnitsByNameFromFolder(folder: OS_Folder, name: string): OS_Unit[] {
+    return folder.contents.filter(
         x => x.name.toLowerCase().indexOf(name.toLowerCase()) > -1
     );
 }
 
-function _recycleUnit(store: OS, idx: number) {
-    const toRecycle = store.fileSystem.units[idx];
-    store.fileSystem.units = store.fileSystem.units.filter((x, i) => i !== idx);
+function _recycleUnit(store: OS, unit: OS_Unit) {
+    const toRecycle = store.fileSystem.units[unit.idx];
+    store.fileSystem.units = store.fileSystem.units.filter(x => x.uuid  !== unit.uuid);
     store.fileSystem.recycleBin.push(toRecycle);
 
-    return store
+    return store;
 }
 
 function _renameUnit(store: OS, idx: number, name: string) {
-    store.fileSystem.units[idx].name = name;
+    const unit = _getUnitByIndex(store, idx);
+    if(typeof unit === 'string') {
+        return store;
+    }
 
-    return store
+    unit.name = name;
+    
+    if(![OS_FileTypeEnum.FOLDER, OS_FileTypeEnum.RECYCLE].includes(unit.type)) {
+        const extension = getExtension(unit.name);
+
+        if(extension) {
+            switch(extension) {
+                case 'exe': unit.type = OS_FileTypeEnum.EXE; break;
+                case 'txt': unit.type = OS_FileTypeEnum.TXT; break;
+                case 'cmd': unit.type = OS_FileTypeEnum.CMD; break;
+                case 'zip': unit.type = OS_FileTypeEnum.ZIP; break;
+            }
+        }
+    }
+
+    store.fileSystem.units[unit.idx] = unit
+
+    return store;
 }

@@ -1,7 +1,7 @@
 @use '../abstracts' as *;
 
 .pos-absolute-center {
-    @include transformCenter();
-    
-    position: absolute;
+	@include transformCenter();
+
+	position: absolute;
 }
