@@ -29,6 +29,15 @@
         }
     }
 
+    &[data-attachments*='window'] {
+        background-color: transparent;
+        border-radius: 0px;
+
+        &:is(:hover, :focus-visible) {
+            background-color: $background;
+        }
+    }
+
     &[data-attachments*='hoverable'] {
         background-color: transparent;
         transition: background-color 120ms ease-in-out;
@@ -51,6 +60,10 @@
     &[data-attachments*='pad-context-menu'] {
         padding: $button-context-menu-padding;
     }
+
+    &[data-attachments*='pad-window'] {
+        padding: $button-window-padding;
+    }
 }
 
 .button {
@@ -60,6 +73,10 @@
 
     &[data-variant='secondary'] {
         @include createButton($clr-button-secondary);
+    }
+
+    &[data-variant='exit'] {
+        @include createButton($clr-button-exit);
     }
 
     position: relative;

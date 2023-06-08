@@ -1,8 +1,15 @@
 $colors-dark: (
+	primary: (
+		400: hsl(200, 62%, 50%)
+	),
 	background: (
 		300: hsl(0 0% 7%),
 		400: hsl(0 0% 15%),
 		500: hsl(0 0% 22%)
+	),
+
+	colors: (
+		exit: hsl(354, 84%, 55%)
 	)
 );
 

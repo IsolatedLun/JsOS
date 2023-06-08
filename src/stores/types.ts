@@ -4,18 +4,13 @@ import type { Some } from "../types";
 // Units
 export enum OS_FileTypeEnum {
     FILE,
-    FOLDER,
-
-    EXE,
-    CMD,
-    TXT,
-    ZIP,
-    RECYCLE
+    BIN
 }
 
 export interface OS_File {
     name: string,
     contents: Some<File>,
+    extension: string;
 
     type: OS_FileTypeEnum
 }
@@ -24,7 +19,7 @@ export interface OS_Folder {
     name: string,
     contents: OS_Unit[],
 
-    type: OS_FileTypeEnum.FOLDER
+    type: OS_FileTypeEnum.BIN
 }
 
 export type OS_Unit = (OS_File | OS_Folder) & { idx: number, uuid: string };

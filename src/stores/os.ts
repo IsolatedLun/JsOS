@@ -79,16 +79,11 @@ function _renameUnit(store: OS, idx: number, name: string) {
 
     unit.name = name;
     
-    if(![OS_FileTypeEnum.FOLDER, OS_FileTypeEnum.RECYCLE].includes(unit.type)) {
+    if(unit.type !== OS_FileTypeEnum.BIN) {
         const extension = getExtension(unit.name);
 
         if(extension) {
-            switch(extension) {
-                case 'exe': unit.type = OS_FileTypeEnum.EXE; break;
-                case 'txt': unit.type = OS_FileTypeEnum.TXT; break;
-                case 'cmd': unit.type = OS_FileTypeEnum.CMD; break;
-                case 'zip': unit.type = OS_FileTypeEnum.ZIP; break;
-            }
+            unit.extension = extension;
         }
     }
 

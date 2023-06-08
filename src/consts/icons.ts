@@ -27,24 +27,25 @@ export const ICON_PLAY = '\uf04b';
 export const ICON_PAUSE = '\uf04c';
 export const ICON_GRIP = '\uf58d';
 export const ICON_QUESTION_CIRCLE = '\uf059';
+export const ICON_EXPAND = '\uf065';
 
 export const ICON_FOLDER = '\uf07b';
 export const ICON_FILE = '\uf15b';
 export const ICON_TERMINAL = '\uf120';
+export const ICON_ZIP = '\uf1c6';
+export const ICON_TEXT = '\uf15c';
+export const ICON_TRASH = '\uf1f8';
 
 export const ICON_GRID_V = '\uf58e';
 export const ICON_GRID_H = '\uf58d';
 export const ICON_TABLE_CELLS = '\uf009';
 
 export const ICON_EYE = '\uf06e';
-
-export const ICON_TRASH = '\uf1f8';
 export const ICON_BUCKET = '\ue4cf';
 
 export const ICON_IMAGE = '\uf03e';
 export const ICON_MEDIA = '\uf03d';
 export const ICON_LINK = '\uf0c1';
 export const ICON_MICROPHONE = '\uf130';
-export const ICON_TEXT = '\uf893';
 export const ICON_BROKEN_LINK = '\uf127';
 export const ICON_COMMUNITY = '\uf0c0';

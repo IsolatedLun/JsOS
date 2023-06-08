@@ -1,3 +1,5 @@
+import { OS_FileTypeEnum } from "./types";
+
 export function getExtension(fileName: string) {
     return fileName.split('.')[1];
 }

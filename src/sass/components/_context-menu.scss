@@ -3,8 +3,9 @@
 .context-menu {
     opacity: 0;
     pointer-events: none;
-    background-color: $clr-background-400;
-    border: 2px solid $clr-background-500;
+
+    background-color: $context-menu-background-clr;
+    border: 2px solid $context-menu-border-clr;
 
     &:is(:focus, :focus-visible, :focus-within) {
         opacity: 1;

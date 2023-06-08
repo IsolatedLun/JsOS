@@ -7,6 +7,7 @@
 	import { JsOS } from "../stores/os";
 	import { OS_FileTypeEnum } from "../stores/types";
 	import { createDefaultOsUnit } from "../utils/defaultCreates";
+	import Window from "../components/Modules/Window/Window.svelte";
 
     onMount(() => {
         backgroundInput.addEventListener('change', handleBackgroundInput);
@@ -34,6 +35,8 @@
 <div on:contextmenu={handleContextMenu}>
     <Desktop />
 
+    <Window />
+
     <ContextMenu bind:instance={ctx}>
         <ContextMenuItem action={() => {
             JsOS.createUnit(createDefaultOsUnit(OS_FileTypeEnum.FILE));
@@ -42,7 +45,7 @@
             Create File
         </ContextMenuItem>    
         <ContextMenuItem action={() => {
-            JsOS.createUnit(createDefaultOsUnit(OS_FileTypeEnum.FOLDER));
+            JsOS.createUnit(createDefaultOsUnit(OS_FileTypeEnum.BIN));
             return true;
         }}>
             Create Folder

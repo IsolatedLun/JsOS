@@ -7,6 +7,10 @@ $clr-background-300: map-get($map: map-get($active-theme, $key: "background"), $
 $clr-background-400: map-get($map: map-get($active-theme, $key: "background"), $key: 400);
 $clr-background-500: map-get($map: map-get($active-theme, $key: "background"), $key: 500);
 
+$clr-primary-400: map-get($map: map-get($active-theme, $key: "primary"), $key: 400);
+
+$clr-colors-exit: map-get($map: map-get($active-theme, $key: "colors"), $key: "exit");
+
 // Global
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600&display=swap');
 
@@ -30,17 +34,23 @@ $taskbar-background-clr: $clr-background-500;
 $taskbar-grid-file-width: 38px;
 $taskbar-width: 75vw;
 
+// Window
+$window-start-width: 32rem;
+$window-background-clr: $clr-background-300;
+$window-header-background-clr: $clr-background-400;
+
+// Context Menu
+$context-menu-background-clr: $clr-background-300;
+$context-menu-border-clr: $clr-background-400;
+
 // Modules/Interactible/Button
-$clr-button-primary: #329acf;
+$clr-button-primary: $clr-primary-400;
 $clr-button-secondary: $clr-background-500;
-// $clr-button-secondary: $clr-background-500;
+$clr-button-exit: $clr-colors-exit;
 
 $button-padding: 0.15rem 0.3rem;
 $button-context-menu-padding: 0.3rem 0.6rem;
-// $button-padding-tiny: 0.1rem 0.3rem;
-// $button-padding-small: 0.2rem 0.6rem;
-// $button-padding-big: 0.4rem 0.8rem;
-// $button-padding-huge: 0.8rem 1.2rem;
+$button-window-padding: 0.4rem 0.6rem;
 
 // Modules/Interactible/Input
 // $clr-input: $clr-background-400;

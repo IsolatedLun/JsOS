@@ -50,6 +50,10 @@ $text-alignments: start, center, end;
 	cursor: pointer;
 }
 
+.cursor-grab {
+	cursor: grab;
+}
+
 .pointers-none {
 	pointer-events: none;
 }

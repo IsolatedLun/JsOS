@@ -1,9 +1,12 @@
 import { OS_FileTypeEnum } from "../stores/types";
-import { ICON_FILE, ICON_FOLDER, ICON_TERMINAL } from "./icons";
+import { ICON_FILE, ICON_FOLDER, ICON_TERMINAL, ICON_TEXT, ICON_TRASH, ICON_ZIP } from "./icons";
 
-export const fileTypeToIcon: Record<OS_FileTypeEnum, string> = {
-    [OS_FileTypeEnum.FOLDER]: ICON_FOLDER,
-    [OS_FileTypeEnum.FILE]: ICON_FILE,
-    [OS_FileTypeEnum.CMD]: ICON_TERMINAL,
-    [OS_FileTypeEnum.EXE]: 'exe'
+export const extensionToIcon: Record<string, string> = {
+    'folder': ICON_FOLDER,
+    'cmd': ICON_TERMINAL,
+    'exe': 'exe',
+    'recycle': ICON_TRASH,
+    'txt': ICON_TEXT,
+    
+    '': ICON_FILE,
 }

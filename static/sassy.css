@@ -1,4 +1,8 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600&display=swap");
+.clr-primary-400 {
+  color: hsl(200, 62%, 50%);
+}
+
 .clr-background-300 {
   color: hsl(0, 0%, 7%);
 }
@@ -9,6 +13,10 @@
 
 .clr-background-500 {
   color: hsl(0, 0%, 22%);
+}
+
+.clr-colors-exit {
+  color: hsl(354, 84%, 55%);
 }
 
 .fs-200 {
@@ -1831,6 +1839,10 @@
   margin-block-end: 5em;
 }
 
+.clr-primary-400 {
+  color: hsl(200, 62%, 50%);
+}
+
 .clr-background-300 {
   color: hsl(0, 0%, 7%);
 }
@@ -1843,10 +1855,16 @@
   color: hsl(0, 0%, 22%);
 }
 
+.clr-colors-exit {
+  color: hsl(354, 84%, 55%);
+}
+
 :root {
+  --clr-primary-400: hsl(200, 62%, 50%);
   --clr-background-300: hsl(0, 0%, 7%);
   --clr-background-400: hsl(0, 0%, 15%);
   --clr-background-500: hsl(0, 0%, 22%);
+  --clr-colors-exit: hsl(354, 84%, 55%);
   --fs-200: 0.5rem;
   --fs-275: 0.6875rem;
   --fs-300: 0.75rem;
@@ -1862,6 +1880,9 @@
 }
 
 @media (prefers-color-scheme: dark) {
+  .clr-primary-400 {
+    color: hsl(200, 62%, 50%);
+  }
   .clr-background-300 {
     color: hsl(0, 0%, 7%);
   }
@@ -1871,10 +1892,15 @@
   .clr-background-500 {
     color: hsl(0, 0%, 22%);
   }
+  .clr-colors-exit {
+    color: hsl(354, 84%, 55%);
+  }
   :root {
+    --clr-primary-400: hsl(200, 62%, 50%);
     --clr-background-300: hsl(0, 0%, 7%);
     --clr-background-400: hsl(0, 0%, 15%);
     --clr-background-500: hsl(0, 0%, 22%);
+    --clr-colors-exit: hsl(354, 84%, 55%);
   }
 }
 *,
@@ -2459,6 +2485,10 @@ canvas {
   cursor: pointer;
 }
 
+.cursor-grab {
+  cursor: grab;
+}
+
 .pointers-none {
   pointer-events: none;
 }
@@ -2551,12 +2581,26 @@ canvas {
 .context-menu {
   opacity: 0;
   pointer-events: none;
-  background-color: hsl(0, 0%, 15%);
-  border: 2px solid hsl(0, 0%, 22%);
+  background-color: hsl(0, 0%, 7%);
+  border: 2px solid hsl(0, 0%, 15%);
 }
 .context-menu:is(:focus, :focus-visible, :focus-within) {
   opacity: 1;
   pointer-events: all;
+}
+
+.window {
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 32rem;
+  aspect-ratio: 16/9;
+  background-color: hsl(0, 0%, 7%);
+  border: 2px solid hsl(0, 0%, 15%);
+  z-index: 999999;
+}
+.window .window__header {
+  background-color: hsl(0, 0%, 15%);
 }
 
 .button {
@@ -2565,30 +2609,37 @@ canvas {
 }
 .button[data-variant=primary] {
   padding: 0.15rem 0.3rem;
-  background-color: #329acf;
+  background-color: hsl(200, 62%, 50%);
   border: 1px solid transparent;
   border-radius: 9px;
   cursor: pointer;
 }
 .button[data-variant=primary] .overlay {
-  background-color: #99cde7;
+  background-color: #98cce7;
 }
 .button[data-variant=primary][data-attachments*=hologram] {
   background-color: transparent;
 }
 .button[data-variant=primary][data-attachments*=hologram]:is(:hover, :focus-visible) {
-  border: 1px solid #329acf;
-  background-color: rgba(50, 154, 207, 0.45);
+  border: 1px solid hsl(200, 62%, 50%);
+  background-color: rgba(48, 154, 207, 0.45);
 }
 .button[data-variant=primary][data-attachments*=hologram][data-selected=true] {
-  background-color: #329acf;
+  background-color: hsl(200, 62%, 50%);
+}
+.button[data-variant=primary][data-attachments*=window] {
+  background-color: transparent;
+  border-radius: 0px;
+}
+.button[data-variant=primary][data-attachments*=window]:is(:hover, :focus-visible) {
+  background-color: hsl(200, 62%, 50%);
 }
 .button[data-variant=primary][data-attachments*=hoverable] {
   background-color: transparent;
   transition: background-color 120ms ease-in-out;
 }
 .button[data-variant=primary][data-attachments*=hoverable]:is(:hover, :focus-visible) {
-  background-color: #329acf;
+  background-color: hsl(200, 62%, 50%);
 }
 .button[data-variant=primary][data-attachments*=round] {
   border-radius: 50%;
@@ -2599,6 +2650,9 @@ canvas {
 }
 .button[data-variant=primary][data-attachments*=pad-context-menu] {
   padding: 0.3rem 0.6rem;
+}
+.button[data-variant=primary][data-attachments*=pad-window] {
+  padding: 0.4rem 0.6rem;
 }
 .button[data-variant=secondary] {
   padding: 0.15rem 0.3rem;
@@ -2620,6 +2674,13 @@ canvas {
 .button[data-variant=secondary][data-attachments*=hologram][data-selected=true] {
   background-color: hsl(0, 0%, 22%);
 }
+.button[data-variant=secondary][data-attachments*=window] {
+  background-color: transparent;
+  border-radius: 0px;
+}
+.button[data-variant=secondary][data-attachments*=window]:is(:hover, :focus-visible) {
+  background-color: hsl(0, 0%, 22%);
+}
 .button[data-variant=secondary][data-attachments*=hoverable] {
   background-color: transparent;
   transition: background-color 120ms ease-in-out;
@@ -2636,6 +2697,56 @@ canvas {
 }
 .button[data-variant=secondary][data-attachments*=pad-context-menu] {
   padding: 0.3rem 0.6rem;
+}
+.button[data-variant=secondary][data-attachments*=pad-window] {
+  padding: 0.4rem 0.6rem;
+}
+.button[data-variant=exit] {
+  padding: 0.15rem 0.3rem;
+  background-color: hsl(354, 84%, 55%);
+  border: 1px solid transparent;
+  border-radius: 9px;
+  cursor: pointer;
+}
+.button[data-variant=exit] .overlay {
+  background-color: #f6959f;
+}
+.button[data-variant=exit][data-attachments*=hologram] {
+  background-color: transparent;
+}
+.button[data-variant=exit][data-attachments*=hologram]:is(:hover, :focus-visible) {
+  border: 1px solid hsl(354, 84%, 55%);
+  background-color: rgba(237, 44, 63, 0.45);
+}
+.button[data-variant=exit][data-attachments*=hologram][data-selected=true] {
+  background-color: hsl(354, 84%, 55%);
+}
+.button[data-variant=exit][data-attachments*=window] {
+  background-color: transparent;
+  border-radius: 0px;
+}
+.button[data-variant=exit][data-attachments*=window]:is(:hover, :focus-visible) {
+  background-color: hsl(354, 84%, 55%);
+}
+.button[data-variant=exit][data-attachments*=hoverable] {
+  background-color: transparent;
+  transition: background-color 120ms ease-in-out;
+}
+.button[data-variant=exit][data-attachments*=hoverable]:is(:hover, :focus-visible) {
+  background-color: hsl(354, 84%, 55%);
+}
+.button[data-variant=exit][data-attachments*=round] {
+  border-radius: 50%;
+}
+.button[data-variant=exit][data-disabled=true] {
+  opacity: 0.5;
+  pointer-events: none;
+}
+.button[data-variant=exit][data-attachments*=pad-context-menu] {
+  padding: 0.3rem 0.6rem;
+}
+.button[data-variant=exit][data-attachments*=pad-window] {
+  padding: 0.4rem 0.6rem;
 }
 .button .overlay {
   position: absolute;

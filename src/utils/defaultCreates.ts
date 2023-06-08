@@ -1,11 +1,11 @@
 import { OS_FileTypeEnum, type OS_Unit } from "../stores/types";
 
-export function createDefaultOsUnit(type: OS_FileTypeEnum = OS_FileTypeEnum.FOLDER): OS_Unit {
-    if (type === OS_FileTypeEnum.FOLDER)
+export function createDefaultOsUnit(type: OS_FileTypeEnum = OS_FileTypeEnum.BIN): OS_Unit {
+    if (type === OS_FileTypeEnum.BIN)
         return {
             type,
             contents: [],
-            name: 'New Unit',
+            name: 'New Bin',
             uuid: crypto.randomUUID(),
             idx: 0,
         }
@@ -13,7 +13,8 @@ export function createDefaultOsUnit(type: OS_FileTypeEnum = OS_FileTypeEnum.FOLD
     else
         return {
             type,
-            contents: new File([], 'New Unit'),
+            contents: new File([], 'New File'),
+            extension: '',
             name: 'New Unit',
             uuid: crypto.randomUUID(),
             idx: 0,

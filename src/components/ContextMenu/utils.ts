@@ -1,10 +1,10 @@
-import { fixBounds } from "../../utils/window";
+import { fixContextMenuBounds } from "../../utils/window";
 
 export function positionContextMenu(el: HTMLElement, mouse: MouseEvent) {
-    el.style.left = mouse.x + 'px';
-    el.style.top = mouse.y + 'px';
+    el.style.left = mouse.offsetX + 'px';
+    el.style.top = mouse.offsetY + 'px';
 
-    fixBounds(el, mouse);
+    fixContextMenuBounds(el, mouse);
 
     el.focus()
 }

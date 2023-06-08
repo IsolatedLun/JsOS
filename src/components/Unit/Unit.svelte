@@ -1,7 +1,8 @@
 <script lang="ts">
-	import { fileTypeToIcon } from '../../consts/consts';
+	import { extensionToIcon } from '../../consts/consts';
+	import { ICON_FOLDER } from '../../consts/icons';
 	import { JsOS } from '../../stores/os';
-	import type { OS_Unit } from '../../stores/types';
+	import { OS_FileTypeEnum, type OS_Unit } from '../../stores/types';
 	import { cubeCss } from '../../utils/cubeCss/cubeCss';
 	import { createDefaultOsUnit } from '../../utils/defaultCreates';
 	import Flex from '../Box/Flex/Flex.svelte';
@@ -45,7 +46,13 @@
 	attachments={['hologram', ...attachments]}
 >
 	<Flex cls={cubeCss({ utilClass: 'pointers-none' })} useColumn={true} align="center">
-		<Icon cls={cubeCss({ utilClass: 'fs-600' })} ariaLabel="">{fileTypeToIcon[props.type]}</Icon>
+		<Icon cls={cubeCss({ utilClass: 'fs-600' })} ariaLabel="">
+			{#if props.type === OS_FileTypeEnum.BIN}
+				{ICON_FOLDER}
+				{:else}
+				{extensionToIcon[props.extension] ?? extensionToIcon['']}
+			{/if}
+		</Icon>
 		<p
 			bind:this={textEl}
             on:input={handleRename}

@@ -1,0 +1,17 @@
+@use '../abstracts/' as *;
+
+.window {
+    @include transformCenter();
+
+    width: $window-start-width;
+    aspect-ratio: 16 / 9;
+    
+    background-color: $window-background-clr;
+    border: 2px solid $window-header-background-clr;
+
+    z-index: $z-index-4;
+
+    & .window__header {
+        background-color: $window-header-background-clr;
+    }
+}
