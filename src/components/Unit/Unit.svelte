@@ -12,12 +12,20 @@
 	import Button from '../Modules/Button/Button.svelte';
 	import type { ButtonAttachments } from '../Modules/Button/types';
 	import Icon from '../Modules/Icon/Icon.svelte';
+	import Window from '../Modules/Window/Window.svelte';
+	import { getWindowById, overlapWindow } from '../Modules/Window/utils';
 	import { displayName } from './utils';
 
 	function handleContextMenu(e: MouseEvent) {
 		e.preventDefault();
 
 		positionContextMenu(ctx, e);
+	}
+
+	function handleClick() {
+		showWindow = true;
+		if(getWindowById(props.uuid))
+			overlapWindow(getWindowById(props.uuid));
 	}
 
     function handleRename(e: Event) {
@@ -37,9 +45,12 @@
 
 	let ctx: HTMLElement;
 	let textEl: HTMLParagraphElement;
+
+	let showWindow = false;
 </script>
 
 <Button
+	on:click={handleClick}
 	on:contextmenu={(e) => handleContextMenu(e.detail)}
 	id={props.uuid}
 	cls={cubeCss({ blockClass: 'unit' })}
@@ -66,6 +77,7 @@
 </Button>
 
 <ContextMenu bind:instance={ctx}>
+	<slot name='contextmenu' />
 	<ContextMenuItem action={() => rename()}>Rename</ContextMenuItem>
 	<ContextMenuItem action={() => {
 		JsOS.recycleUnit(props);
@@ -74,3 +86,12 @@
 		Move to bin
 	</ContextMenuItem>
 </ContextMenu>
+
+<Window on:close={() => showWindow = false} {props} hide={!showWindow}>
+	<div slot='window-content'>
+		<slot name='window-content' />
+	</div>
+	<div slot='window-contextmenu'>
+		<slot name='window-contextmenu' />
+	</div>
+</Window>

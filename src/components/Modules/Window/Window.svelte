@@ -1,49 +1,116 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
+	import { createEventDispatcher, onMount } from 'svelte';
 	import Button from '../Button/Button.svelte';
-	import { moveWindow } from '../../../utils/window';
+	import { createWindowId, fixWindowBounds, moveWindow } from './utils';
 	import Flex from '../../Box/Flex/Flex.svelte';
 	import { cubeCss } from '../../../utils/cubeCss/cubeCss';
 	import Icon from '../Icon/Icon.svelte';
 	import { ICON_EXPAND, ICON_TIMES } from '../../../consts/icons';
 	import Unit from '../../Unit/Unit.svelte';
+	import type { OS_Unit } from '../../../stores/types';
+	import { expandWindow, overlapWindow } from './utils';
+	import ContextMenu from '../../ContextMenu/ContextMenu.svelte';
+	import { positionContextMenu } from '../../ContextMenu/utils';
+
+	onMount(() => {
+		// Child windows get stuck to it's parent, so we move every window to the body of the document.
+		// moves existing elements instead of copying.	
+		document.body.appendChild(windowEl);
+
+		overlapWindow(windowEl);
+		
+		const observer = new ResizeObserver(() => fixWindowBounds(windowEl));
+		observer.observe(windowEl)
+	})
+
+
+	function handleContextMenu(e: MouseEvent) {
+		e.preventDefault();
+
+		const target = e.target as HTMLElement;
+		if(!target.closest('.unit') && target.closest('.window__content'))
+			positionContextMenu(ctx, e);
+	}
 
 	function handleMouseMove(e: MouseEvent) {
-        if(isMouseDown) {
-            moveWindow(windowEl, e);
-        }
-    }
+		if (isMouseDown) {
+			moveWindow(windowEl, e);
+			overlapWindow(windowEl);
+		}
+	}
 
-    let windowEl: HTMLElement;
-	let headerEl: HTMLElement;
+	function handleExpandWindow() {
+		expand = true;
+	}
+
+	export let props: OS_Unit;
+	export let hide = false;
+
+	let windowEl: HTMLElement;
+	let windowContentEl: HTMLElement;
+
+	let ctx: HTMLElement;
 	let isMouseDown = false;
+	let expand = true;
+
+	const dispatch = createEventDispatcher();
 </script>
 
-<div bind:this={windowEl} class="[ window ] [ pos-absolute border-radius-bevelled overflow-hidden ]">
+<div
+	bind:this={windowEl}
+	id={createWindowId(props.uuid)}
+	class="[ window ] [ pos-fixed border-radius-bevelled ]"
+	hidden={hide}
+>
 	<header
 		class="[ window__header ] [ width-100 cursor-grab ]"
-        bind:this={headerEl}
 		on:mousedown={() => (isMouseDown = true)}
 		on:mouseup={() => (isMouseDown = false)}
-        on:mouseleave={() => (isMouseDown = false)}
-        on:mousemove={handleMouseMove}
+		on:mouseleave={() => (isMouseDown = false)}
+		on:mousemove={handleMouseMove}
 	>
-		<Flex align='center' justify='space-between' cls={cubeCss({utilClass: "width-100"})}>
-			<p class="[ clr-text-muted padding-inline-start-2 fs-300 fw-bold ]">main.js</p>
+		<Flex align="center" justify="space-between" gap={2} cls={cubeCss({ utilClass: 'width-100' })}>
+			<p class="[ clr-text-muted padding-inline-start-2 fs-300 fw-bold ]">{props.name}</p>
 			<Flex gap={0}>
-				<Button variant='primary' attachments={['window', 'pad-window']}>
-					<p class="[ fw-bold ]">-</p>
-				</Button>
-				<Button variant='primary' attachments={['window', 'pad-window']}>
-					<Icon ariaLabel='Expand window'>{ICON_EXPAND}</Icon>
-				</Button>
-				<Button variant='exit' attachments={['window', 'pad-window']}>
-					<Icon ariaLabel='Close window'>{ICON_TIMES}</Icon>
+				{#if expand}
+						<Button
+							on:click={() => (expand = false)}
+							variant="primary"
+							attachments={['window', 'pad-window']}
+						>
+							<p class="[ fw-bold ]">-</p>
+						</Button>
+					{:else}
+						<Button
+							on:click={() => handleExpandWindow()}
+							variant="primary"
+							attachments={['window', 'pad-window']}
+						>
+							<Icon ariaLabel="Expand window">{ICON_EXPAND}</Icon>
+						</Button>
+				{/if}
+				<Button
+					on:click={() => dispatch('close')}
+					variant="exit"
+					attachments={['window', 'pad-window']}
+				>
+					<Icon ariaLabel="Close window">{ICON_TIMES}</Icon>
 				</Button>
 			</Flex>
 		</Flex>
 	</header>
-	<main class="[ window__content ] [ padding-1 ] [ overflow-y-auto ]">
-		<slot />
+	<main
+		bind:this={windowContentEl}
+		class="[ window__content ] [ overflow-hidden resize-both ]"
+		hidden={!expand}
+		on:contextmenu={handleContextMenu}
+	>
+		<div class="[ content__container ] [ padding-1 overflow-auto ]">
+			<slot name='window-content' />
+		</div>
 	</main>
 </div>
+
+<ContextMenu bind:instance={ctx}>
+	<slot name="window-contextmenu" />
+</ContextMenu>

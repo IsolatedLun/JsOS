@@ -7,45 +7,38 @@
 	import { JsOS } from "../stores/os";
 	import { OS_FileTypeEnum } from "../stores/types";
 	import { createDefaultOsUnit } from "../utils/defaultCreates";
-	import Window from "../components/Modules/Window/Window.svelte";
-
-    onMount(() => {
-        backgroundInput.addEventListener('change', handleBackgroundInput);
-    })
 
     function handleContextMenu(e: MouseEvent) {
         e.preventDefault();
 
         const target = e.target as HTMLElement;
-        if(!(target.classList.contains('button')))
+        if(target.classList.contains('unit-grid'))
             positionContextMenu(ctx, e);
     }
 
     function handleBackgroundInput(e: Event) {
-        if(backgroundInput.files && backgroundInput.files.length > 0) {
-            const imgUrl = window.URL.createObjectURL(backgroundInput.files[0]);
+        const target = e.target as HTMLInputElement;
+        if(target.files && target.files.length > 0) {
+            const imgUrl = window.URL.createObjectURL(target.files[0]);
             document.body.style.backgroundImage = `url(${imgUrl})`;
         }
     }
 
     let ctx: HTMLElement;
-    let backgroundInput: HTMLInputElement;
 </script>
 
-<div on:contextmenu={handleContextMenu}>
+<div class="[ layout ]" on:contextmenu={handleContextMenu}>
     <Desktop />
-
-    <Window />
 
     <ContextMenu bind:instance={ctx}>
         <ContextMenuItem action={() => {
-            JsOS.createUnit(createDefaultOsUnit(OS_FileTypeEnum.FILE));
+            JsOS.createUnit(createDefaultOsUnit(OS_FileTypeEnum.FILE, 'root'));
             return true;
         }}>
             Create File
         </ContextMenuItem>    
         <ContextMenuItem action={() => {
-            JsOS.createUnit(createDefaultOsUnit(OS_FileTypeEnum.BIN));
+            JsOS.createUnit(createDefaultOsUnit(OS_FileTypeEnum.BIN, 'root'));
             return true;
         }}>
             Create Folder
@@ -59,7 +52,7 @@
     </ContextMenu>
 </div>
 
-<input bind:this={backgroundInput} id="background-input" type="file" accept="image/*" hidden={true} />
+<input on:change={handleBackgroundInput} id="background-input" type="file" accept="image/*" hidden={true} />
 
 <style>
     @import url('../../static/posty.css');

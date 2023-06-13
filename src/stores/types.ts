@@ -15,14 +15,14 @@ export interface OS_File {
     type: OS_FileTypeEnum
 }
 
-export interface OS_Folder {
+export interface OS_Bin {
     name: string,
-    contents: OS_Unit[],
+    contents: string[],
 
     type: OS_FileTypeEnum.BIN
 }
 
-export type OS_Unit = (OS_File | OS_Folder) & { idx: number, uuid: string };
+export type OS_Unit = (OS_File | OS_Bin) & { idx: number, uuid: string, parent: string | null };
 // =============
 
 

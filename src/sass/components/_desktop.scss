@@ -1,7 +1,0 @@
-@use '../abstracts/' as *;
-
-.desktop-container {
-    .desktop-grid {
-        grid-template-columns: repeat(auto-fill, minmax($desktop-grid-file-width, 1fr));
-    }
-}

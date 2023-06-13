@@ -1,5 +1,5 @@
 import { get, writable } from "svelte/store";
-import { OS_ThemeEnum, type OS, OS_GridLayout, type OS_Unit, OS_FileTypeEnum, type OS_Folder } from "./types";
+import { OS_ThemeEnum, type OS, OS_GridLayout, type OS_Unit, OS_FileTypeEnum, type OS_Bin } from "./types";
 import { _initiateChangeBackground, getExtension } from "./utils";
 import type { Result } from "../types";
 
@@ -34,8 +34,20 @@ export function createOS() {
             os.fileSystem.units[unit.idx] = unit;
             return os
         }),
+
+
         getUnitByIndex: (idx: number) => _getUnitByIndex(get(store), idx),
-        filterUnitsByNameFromFolder: (folder: OS_Folder, name: string) => _filterUnitsByNameFromFolder(folder, name),
+        getUnitsByIndex: (indexes: number[]) => {
+            const _store = get(store);
+            const units: OS_Unit[] = [];
+
+            indexes.forEach(idx => units.push(_store.fileSystem.units[idx]));
+            return units;
+        },
+        getUnitsByParent: (parentUuid: string) => {
+            return get(store).fileSystem.units.filter(x => x.parent === parentUuid);
+        },
+
         recycleUnit: (unit: OS_Unit) => store.update(() => _recycleUnit(get(store), unit)),
         renameUnit: (idx: number, name: string) => store.update(() => _renameUnit(get(store), idx, name)),
 
@@ -48,19 +60,7 @@ export const JsOS = createOS();
 
 // ===========================================
 function _getUnitByIndex(store: OS, idx: number): Result<OS_Unit, string> {
-    try {
-        return store.fileSystem.units[idx];
-    }
-
-    catch {
-        return 'File not found';
-    }
-}
-
-function _filterUnitsByNameFromFolder(folder: OS_Folder, name: string): OS_Unit[] {
-    return folder.contents.filter(
-        x => x.name.toLowerCase().indexOf(name.toLowerCase()) > -1
-    );
+    return store.fileSystem.units[idx];
 }
 
 function _recycleUnit(store: OS, unit: OS_Unit) {

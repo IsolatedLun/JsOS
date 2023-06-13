@@ -7,6 +7,8 @@
     background-color: $context-menu-background-clr;
     border: 2px solid $context-menu-border-clr;
 
+    z-index: $z-index-4;
+
     &:is(:focus, :focus-visible, :focus-within) {
         opacity: 1;
         pointer-events: all;

@@ -1,9 +1,15 @@
-<script lang='ts'>
-	import Button from "../Modules/Button/Button.svelte";
+<script lang="ts">
+	import { cubeCss } from '../../utils/cubeCss/cubeCss';
+	import Button from '../Modules/Button/Button.svelte';
 
-    export let action: () => boolean;
+	export let action: () => boolean;
 </script>
 
-<Button on:click={() => action()} variant='secondary' attachments={['hoverable', 'pad-context-menu']}>
-    <slot />
+<Button
+	cls={cubeCss({ blockClass: 'context-menu-item' })}
+	on:click={() => action()}
+	variant="secondary"
+	attachments={['hoverable', 'pad-context-menu']}
+>
+	<slot />
 </Button>

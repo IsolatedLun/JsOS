@@ -2477,6 +2477,10 @@ canvas {
   overflow-y: auto;
 }
 
+.overflow-auto {
+  overflow: auto;
+}
+
 .display-block {
   display: block;
 }
@@ -2503,6 +2507,10 @@ canvas {
 
 .opacity-0 {
   opacity: 0;
+}
+
+.resize-both {
+  resize: both;
 }
 
 .text-ellipsis-1 {
@@ -2550,10 +2558,6 @@ canvas {
   width: 1px;
 }
 
-.desktop-container .desktop-grid {
-  grid-template-columns: repeat(auto-fill, minmax(82px, 1fr));
-}
-
 .taskbar {
   width: 75vw;
   background-color: hsl(0, 0%, 22%);
@@ -2563,6 +2567,10 @@ canvas {
 }
 .taskbar .unit .unit__name {
   display: none;
+}
+
+.unit-grid {
+  grid-template-columns: repeat(auto-fill, minmax(82px, 1fr));
 }
 
 .unit {
@@ -2583,6 +2591,7 @@ canvas {
   pointer-events: none;
   background-color: hsl(0, 0%, 7%);
   border: 2px solid hsl(0, 0%, 15%);
+  z-index: 999999;
 }
 .context-menu:is(:focus, :focus-visible, :focus-within) {
   opacity: 1;
@@ -2593,14 +2602,20 @@ canvas {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 32rem;
-  aspect-ratio: 16/9;
-  background-color: hsl(0, 0%, 7%);
-  border: 2px solid hsl(0, 0%, 15%);
   z-index: 999999;
 }
 .window .window__header {
   background-color: hsl(0, 0%, 15%);
+}
+.window .window__content {
+  width: 100%;
+  height: 100%;
+  border: 2px solid hsl(0, 0%, 15%);
+  background-color: hsl(0, 0%, 7%);
+}
+.window .window__content .content__container {
+  width: 100%;
+  height: 100%;
 }
 
 .button {

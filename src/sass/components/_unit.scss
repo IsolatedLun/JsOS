@@ -1,3 +1,9 @@
+@use '../abstracts/' as *;
+
+.unit-grid {
+    grid-template-columns: repeat(auto-fill, minmax($desktop-grid-file-width, 1fr));
+}
+
 .unit {
     aspect-ratio: 1;
 
