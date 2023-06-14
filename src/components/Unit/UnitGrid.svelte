@@ -9,7 +9,7 @@
 </script>
 
 <div class="[ unit-grid ] [ grid ]">
-    {#each $JsOS.fileSystem.units.filter(x => x.parent === parentUuid) as unit}
+    {#each $JsOS.units.filter(x => x.parent === parentUuid) as unit}
         <svelte:component this={eval(createComponentName(unit.type))} props={unit} />
     {/each}
 </div>

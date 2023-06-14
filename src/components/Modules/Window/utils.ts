@@ -1,4 +1,8 @@
 export function fixWindowBounds(el: HTMLElement) {
+    if (!el) {
+        return;
+    }
+
     const screenW = window.innerWidth;
     const screenH = window.innerHeight;
     

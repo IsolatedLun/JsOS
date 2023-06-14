@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { extensionToIcon } from '../../consts/consts';
-	import { ICON_FOLDER } from '../../consts/icons';
+	import { ICON_FOLDER, ICON_TRASH } from '../../consts/icons';
 	import { JsOS } from '../../stores/os';
 	import { OS_FileTypeEnum, type OS_Unit } from '../../stores/types';
 	import { cubeCss } from '../../utils/cubeCss/cubeCss';
@@ -24,23 +24,22 @@
 
 	function handleClick() {
 		showWindow = true;
-		if(getWindowById(props.uuid))
-			overlapWindow(getWindowById(props.uuid));
+		if (getWindowById(props.uuid)) overlapWindow(getWindowById(props.uuid));
 	}
 
-    function handleRename(e: Event) {
-        const target = e.target as HTMLParagraphElement;
-        JsOS.renameUnit(props.idx, target.textContent!);
-    }
+	function handleRename(e: Event) {
+		const target = e.target as HTMLParagraphElement;
+		JsOS.renameUnit(props.idx, target.textContent!);
+	}
 
-	function rename() {
+	function handleFocusRename() {
 		textEl.contentEditable = String(true);
 		textEl.focus();
 
-        return true;
+		return true;
 	}
 
-	export let props: OS_Unit = createDefaultOsUnit();
+	export let props: OS_Unit = createDefaultOsUnit({});
 	export let attachments: ButtonAttachments[] = [];
 
 	let ctx: HTMLElement;
@@ -58,18 +57,24 @@
 >
 	<Flex cls={cubeCss({ utilClass: 'pointers-none' })} useColumn={true} align="center">
 		<Icon cls={cubeCss({ utilClass: 'fs-600' })} ariaLabel="">
-			{#if props.type === OS_FileTypeEnum.BIN}
-				{ICON_FOLDER}
+			{#if props.icon}
+					{props.icon}
 				{:else}
-				{extensionToIcon[props.extension] ?? extensionToIcon['']}
+
+				{#if props.type === OS_FileTypeEnum.BIN}
+					{props.uuid === 'recycleBin' ? ICON_TRASH : ICON_FOLDER}
+				{:else}
+					{extensionToIcon[props.extension ?? '']}
+				{/if}
 			{/if}
 		</Icon>
 		<p
 			bind:this={textEl}
-            on:input={handleRename}
+			on:input={handleRename}
+			on:blur={() => (textEl.contentEditable = String(false))}
 			class="[ unit__name ] [ text-ellipsis-2 pointers-none ]"
 			contenteditable="false"
-            spellcheck="false"
+			spellcheck="false"
 		>
 			{displayName(props.name, $JsOS.preferences.showExtensions)}
 		</p>
@@ -77,21 +82,40 @@
 </Button>
 
 <ContextMenu bind:instance={ctx}>
-	<slot name='contextmenu' />
-	<ContextMenuItem action={() => rename()}>Rename</ContextMenuItem>
-	<ContextMenuItem action={() => {
-		JsOS.recycleUnit(props);
-		return true;
-	}}>
-		Move to bin
-	</ContextMenuItem>
+	<slot name="contextmenu" />
+	{#if props.parent === 'recycleBin'}
+		<ContextMenuItem
+			action={() => {
+				JsOS.restoreUnit(props);
+				return true;
+			}}>Restore</ContextMenuItem
+		>
+		<ContextMenuItem
+			action={() => {
+				JsOS.deleteUnit(props);
+				return true;
+			}}
+		>
+			Delete
+		</ContextMenuItem>
+	{:else}
+		<ContextMenuItem action={() => handleFocusRename()}>Rename</ContextMenuItem>
+		<ContextMenuItem
+			action={() => {
+				JsOS.recycleUnit(props);
+				return true;
+			}}
+		>
+			Move to bin
+		</ContextMenuItem>
+	{/if}
 </ContextMenu>
 
-<Window on:close={() => showWindow = false} {props} hide={!showWindow}>
-	<div slot='window-content'>
-		<slot name='window-content' />
+<Window on:close={() => (showWindow = false)} {props} hide={!showWindow}>
+	<div slot="window-content" class="[ width-100 height-100 ]">
+		<slot name="window-content" />
 	</div>
-	<div slot='window-contextmenu'>
-		<slot name='window-contextmenu' />
+	<div slot="window-contextmenu">
+		<slot name="window-contextmenu" />
 	</div>
 </Window>

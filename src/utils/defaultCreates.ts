@@ -1,24 +1,16 @@
-import { OS_FileTypeEnum, type OS_Unit } from "../stores/types";
+import { OS_FileTypeEnum, type OS_Unit } from '../stores/types';
 
-export function createDefaultOsUnit(type: OS_FileTypeEnum = OS_FileTypeEnum.BIN, parent: string | null = null): OS_Unit {
-    if (type === OS_FileTypeEnum.BIN)
-        return {
-            type,
-            parent: parent,
-            contents: [],
-            name: 'New Bin',
-            uuid: crypto.randomUUID(),
-            idx: 0,
-        }
-        
-    else
-        return {
-            type,
-            parent: parent,
-            contents: new File([], 'New File'),
-            extension: '',
-            name: 'New Unit',
-            uuid: crypto.randomUUID(),
-            idx: 0,
-        }
+export function createDefaultOsUnit(unit: Partial<OS_Unit>): OS_Unit {
+	return { 
+		type: unit?.type ?? OS_FileTypeEnum.BIN,
+		parent: unit?.parent ?? 'root',
+		isSystemFile: unit?.isSystemFile ?? false,
+		previousParent: unit?.previousParent ?? '',
+		contents:  unit?.contents ?? [],
+		icon: unit?.icon ?? null,
+		extension: '',
+		name: unit?.name ?? 'New Unit',
+		uuid: unit?.uuid ?? crypto.randomUUID(),
+		idx: 0
+	}
 }

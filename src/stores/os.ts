@@ -1,17 +1,14 @@
 import { get, writable } from "svelte/store";
-import { OS_ThemeEnum, type OS, OS_GridLayout, type OS_Unit, OS_FileTypeEnum, type OS_Bin } from "./types";
+import { OS_ThemeEnum, type OS, OS_GridLayout, type OS_Unit, OS_FileTypeEnum } from "./types";
 import { _initiateChangeBackground, getExtension } from "./utils";
 import type { Result } from "../types";
+import { createDefaultOsUnit } from "../utils/defaultCreates";
 
 export function createOS() {
     let store = writable<OS>({
-        fileSystem: {
-            units: [],
-            recycleBin: [],
-            gridLayout: OS_GridLayout.MEDIUM
-        },
+        units: [],
         preferences: {
-            theme: OS_ThemeEnum.DARk,
+            theme: OS_ThemeEnum.DARK,
             showExtensions: false
         },
         taskbar: {
@@ -25,13 +22,13 @@ export function createOS() {
 
         // File System
         createUnit: (unit: OS_Unit) => store.update(os => {
-            unit.idx = os.fileSystem.units.length;
+            unit.idx = os.units.length;
 
-            os.fileSystem.units.push(unit);
+            os.units.push(unit);
             return os;
         }),
         setUnit: (unit: OS_Unit) => store.update(os => {
-            os.fileSystem.units[unit.idx] = unit;
+            os.units[unit.idx] = unit;
             return os
         }),
 
@@ -41,15 +38,26 @@ export function createOS() {
             const _store = get(store);
             const units: OS_Unit[] = [];
 
-            indexes.forEach(idx => units.push(_store.fileSystem.units[idx]));
+            indexes.forEach(idx => units.push(_store.units[idx]));
             return units;
         },
         getUnitsByParent: (parentUuid: string) => {
-            return get(store).fileSystem.units.filter(x => x.parent === parentUuid);
+            return get(store).units.filter(x => x.parent === parentUuid);
         },
 
-        recycleUnit: (unit: OS_Unit) => store.update(() => _recycleUnit(get(store), unit)),
+        recycleUnit: (unit: OS_Unit) => store.update(os => _changeUnitParent(os, unit, 'recycleBin')),
+        restoreUnit: (unit: OS_Unit) => store.update(os => _changeUnitParent(os, unit, 'root')),
         renameUnit: (idx: number, name: string) => store.update(() => _renameUnit(get(store), idx, name)),
+        deleteUnit: (unit: OS_Unit) => store.update(os => _deleteUnit(os, unit)),
+
+        saveFile: (unit: OS_Unit, contents: string) => store.update((os: OS) => {
+            const unitToUpdate: OS_Unit = os.units[unit.idx];
+            unitToUpdate.contents = new File([contents], unit.name);
+
+            console.log(os);
+
+            return os;
+        }),
 
         // Preferences
         changeBackground: () => _initiateChangeBackground()
@@ -60,13 +68,18 @@ export const JsOS = createOS();
 
 // ===========================================
 function _getUnitByIndex(store: OS, idx: number): Result<OS_Unit, string> {
-    return store.fileSystem.units[idx];
+    return store.units[idx];
 }
 
-function _recycleUnit(store: OS, unit: OS_Unit) {
-    const toRecycle = store.fileSystem.units[unit.idx];
-    store.fileSystem.units = store.fileSystem.units.filter(x => x.uuid  !== unit.uuid);
-    store.fileSystem.recycleBin.push(toRecycle);
+function _changeUnitParent(store: OS, unit: OS_Unit, newParent: string) {
+    store.units[unit.idx].parent = newParent;
+
+    return store;
+}
+
+function _deleteUnit(store: OS, unit: OS_Unit) {
+    store.units.splice(unit.idx, 1);
+    store.units.forEach((unit, i) => unit.idx = i);
 
     return store;
 }
@@ -79,7 +92,7 @@ function _renameUnit(store: OS, idx: number, name: string) {
 
     unit.name = name;
     
-    if(unit.type !== OS_FileTypeEnum.BIN) {
+    if('extension' in unit) {
         const extension = getExtension(unit.name);
 
         if(extension) {
@@ -87,7 +100,7 @@ function _renameUnit(store: OS, idx: number, name: string) {
         }
     }
 
-    store.fileSystem.units[unit.idx] = unit
+    store.units[unit.idx] = unit
 
     return store;
 }

@@ -7,29 +7,30 @@ export enum OS_FileTypeEnum {
     BIN
 }
 
-export interface OS_File {
+export type OS_Unit =  { 
     name: string,
-    contents: Some<File>,
-    extension: string;
+    icon: Some<string>,
+    uuid: string, 
+    
+    contents: Some<string[] | File>,
+    
+    idx: number, 
+    isSystemFile: boolean,
+    extension: Some<string>,
+
+
+    parent: Some<string>,
+    previousParent: Some<string>, 
 
     type: OS_FileTypeEnum
-}
-
-export interface OS_Bin {
-    name: string,
-    contents: string[],
-
-    type: OS_FileTypeEnum.BIN
-}
-
-export type OS_Unit = (OS_File | OS_Bin) & { idx: number, uuid: string, parent: string | null };
+};
 // =============
 
 
 // =============
 // Preferences/Settings
 export enum OS_ThemeEnum {
-    DARk,
+    DARK,
     LIGHT
 }
 
@@ -46,14 +47,10 @@ export interface OS_Preferences {
 // =============
 
 export interface OS {
-    fileSystem: {
-        units: OS_Unit[],
-        recycleBin: OS_Unit[],
-        gridLayout: OS_GridLayout,
-    },
+    units: OS_Unit[],
 
     taskbar: {
-        references: OS_Unit[],
+        references: string[],
         show_search: boolean,
     },
 

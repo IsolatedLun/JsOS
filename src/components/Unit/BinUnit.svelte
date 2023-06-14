@@ -24,13 +24,13 @@
 
     <div slot='window-contextmenu' class="[ grid ]">
         <ContextMenuItem action={() => {
-            JsOS.createUnit(createDefaultOsUnit(OS_FileTypeEnum.FILE, props.uuid));
+            JsOS.createUnit(createDefaultOsUnit({type: OS_FileTypeEnum.FILE, parent: props.uuid}));
             return true;
             }}>
             Create File
         </ContextMenuItem>
         <ContextMenuItem action={() => {
-            JsOS.createUnit(createDefaultOsUnit(OS_FileTypeEnum.BIN, props.uuid));
+            JsOS.createUnit(createDefaultOsUnit({type: OS_FileTypeEnum.BIN, parent: props.uuid}));
             return true;
             }}>
             Create Folder
