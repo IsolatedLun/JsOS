@@ -6,7 +6,6 @@
 	import { cubeCss } from '../../../utils/cubeCss/cubeCss';
 	import Icon from '../Icon/Icon.svelte';
 	import { ICON_EXPAND, ICON_TIMES } from '../../../consts/icons';
-	import Unit from '../../Unit/Unit.svelte';
 	import type { OS_Unit } from '../../../stores/types';
 	import { expandWindow, overlapWindow } from './utils';
 	import ContextMenu from '../../ContextMenu/ContextMenu.svelte';
@@ -105,9 +104,15 @@
 		hidden={!expand}
 		on:contextmenu={handleContextMenu}
 	>
-		<div class="[ content__container ] [ padding-1 overflow-auto ]">
-			<slot name='window-content' />
-		</div>
+		<Flex cls={cubeCss({utilClass: 'width-100 height-100'})}  useColumn={true} justify='space-between'>
+			<div class="[ content__container ] [ padding-1 overflow-auto ]">
+				<slot name='window-content' />
+			</div>
+	
+			<footer class="[ window__footer ] [ width-100 padding-inline-1 ]">
+				<slot name='window-footer' />
+			</footer>
+		</Flex>
 	</main>
 </div>
 

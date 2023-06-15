@@ -4,6 +4,7 @@ import type { Some } from "../types";
 // Units
 export enum OS_FileTypeEnum {
     FILE,
+    RECYCLE,
     BIN
 }
 

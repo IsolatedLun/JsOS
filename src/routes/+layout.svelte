@@ -11,7 +11,7 @@
 	onMount(() => {
 		JsOS.createUnit(
 			createDefaultOsUnit({
-				type: OS_FileTypeEnum.BIN,
+				type: OS_FileTypeEnum.RECYCLE,
 				parent: 'root',
 				uuid: 'recycleBin',
 				name: 'Recycle Bin'

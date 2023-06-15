@@ -23,7 +23,7 @@
 
 <div
 	bind:this={instance}
-	class="[ context-menu ] [ pos-absolute border-radius-bevelled padding-1 ]"
+	class="[ context-menu ] [ pos-absolute overflow-hidden border-radius-bevelled  ]"
 	tabindex="-1"
 >
 	<div bind:this={childrenContainer} class="[ grid ]">

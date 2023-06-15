@@ -6,7 +6,8 @@
 
     z-index: $z-index-4;
 
-    .window__header {
+    .window__header,
+    .window__footer {
         background-color: $window-header-background-clr;
     }
 

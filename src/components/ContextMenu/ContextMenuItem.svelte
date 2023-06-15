@@ -6,10 +6,10 @@
 </script>
 
 <Button
-	cls={cubeCss({ blockClass: 'context-menu-item' })}
+	cls={cubeCss({ blockClass: 'context-menu-item', utilClass: 'width-100' })}
 	on:click={() => action()}
 	variant="secondary"
-	attachments={['hoverable', 'pad-context-menu']}
+	attachments={['hoverable', 'pad-context-menu', 'box']}
 >
 	<slot />
 </Button>

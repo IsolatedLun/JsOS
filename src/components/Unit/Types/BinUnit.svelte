@@ -1,10 +1,10 @@
 <script lang='ts'>
-	import { JsOS } from "../../stores/os";
-	import { OS_FileTypeEnum, type OS_Unit } from "../../stores/types";
-	import { createDefaultOsUnit } from "../../utils/defaultCreates";
-	import ContextMenuItem from "../ContextMenu/ContextMenuItem.svelte";
-    import Unit from "./Unit.svelte";
-	import UnitGrid from "./UnitGrid.svelte";
+	import { JsOS } from "../../../stores/os";
+	import { OS_FileTypeEnum, type OS_Unit } from "../../../stores/types";
+	import { createDefaultOsUnit } from "../../../utils/defaultCreates";
+	import ContextMenuItem from "../../ContextMenu/ContextMenuItem.svelte";
+    import Unit from "../Unit.svelte";
+	import UnitGrid from "../UnitGrid.svelte";
 
     export let props: OS_Unit;
 </script>
@@ -30,10 +30,14 @@
             Create File
         </ContextMenuItem>
         <ContextMenuItem action={() => {
-            JsOS.createUnit(createDefaultOsUnit({type: OS_FileTypeEnum.BIN, parent: props.uuid}));
+            JsOS.createUnit(createDefaultOsUnit({type: OS_FileTypeEnum.BIN, parent: props.uuid, contents: []}));
             return true;
             }}>
             Create Folder
         </ContextMenuItem>
+    </div>
+
+    <div slot='window-footer'>
+        <p>{props.contents?.length} items</p>
     </div>
 </Unit>

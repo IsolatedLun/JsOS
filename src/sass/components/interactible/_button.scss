@@ -56,6 +56,10 @@
         opacity: 0.5;
         pointer-events: none;
     }
+     
+    &[data-attachments*='box'] {
+        border-radius: 0px;
+    }
 
     &[data-attachments*='pad-context-menu'] {
         padding: $button-context-menu-padding;

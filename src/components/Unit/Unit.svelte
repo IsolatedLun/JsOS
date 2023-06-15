@@ -29,7 +29,7 @@
 
 	function handleRename(e: Event) {
 		const target = e.target as HTMLParagraphElement;
-		JsOS.renameUnit(props.idx, target.textContent!);
+		JsOS.renameUnit(props, target.textContent!);
 	}
 
 	function handleFocusRename() {
@@ -100,14 +100,16 @@
 		</ContextMenuItem>
 	{:else}
 		<ContextMenuItem action={() => handleFocusRename()}>Rename</ContextMenuItem>
-		<ContextMenuItem
-			action={() => {
-				JsOS.recycleUnit(props);
-				return true;
-			}}
-		>
-			Move to bin
-		</ContextMenuItem>
+		{#if props.uuid !== 'recycleBin'}
+			<ContextMenuItem
+				action={() => {
+					JsOS.recycleUnit(props);
+					return true;
+				}}
+			>
+				Move to bin
+			</ContextMenuItem>
+		{/if}
 	{/if}
 </ContextMenu>
 
@@ -117,5 +119,10 @@
 	</div>
 	<div slot="window-contextmenu">
 		<slot name="window-contextmenu" />
+	</div>
+	<div slot='window-footer'>
+		<slot name='window-footer'>
+			<p class="[ visibility-hidden ]" aria-hidden="true">placeholder</p>
+		</slot>
 	</div>
 </Window>
