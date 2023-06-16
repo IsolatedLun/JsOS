@@ -28,7 +28,7 @@
 
     <div slot='window-contextmenu' class="[ grid ]">
         <ContextMenuItem action={() => {
-            JsOS.createUnit(createDefaultOsUnit({type: OS_FileTypeEnum.BIN, parent: props.uuid}));
+            JsOS.deleteAllUnitsFromRecycleBin();
             return true;
             }}>
             Delete all files

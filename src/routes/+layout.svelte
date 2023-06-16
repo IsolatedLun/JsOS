@@ -7,6 +7,9 @@
 	import { JsOS } from '../stores/os';
 	import { OS_FileTypeEnum } from '../stores/types';
 	import { createDefaultOsUnit } from '../utils/defaultCreates';
+	import type { Some } from '../types';
+	import { deselectUnits, drawSelectBox } from '../utils/selectBox';
+	import { moveSelectedUnitsToBin } from '../stores/utils';
 
 	onMount(() => {
 		JsOS.createUnit(
@@ -14,7 +17,8 @@
 				type: OS_FileTypeEnum.RECYCLE,
 				parent: 'root',
 				uuid: 'recycleBin',
-				name: 'Recycle Bin'
+				name: 'Recycle Bin',
+				isSystemFile: true
 			})
 		);
 	});
@@ -34,10 +38,39 @@
 		}
 	}
 
+	function handleMouseDown(e: MouseEvent) {
+		previousMouseEvent = e;
+		isLeftClickDown = true;
+	}
+
+	function handleMouseUp() {
+		isLeftClickDown = false;
+		selectBoxEl.hidden = true;
+	}
+
+	function handleMouseMove(e: MouseEvent) {
+		if(isLeftClickDown) {
+			selectBoxEl.hidden = false;
+			JsOS.setSelectedUnits(drawSelectBox(previousMouseEvent!, e, selectBoxEl));
+		}
+	}
+
+	let layoutEl: HTMLElement;
+	let selectBoxEl: HTMLElement;
 	let ctx: HTMLElement;
+
+	let isLeftClickDown = false;
+	let previousMouseEvent: Some<MouseEvent> = null;
 </script>
 
-<div class="[ layout ]" on:contextmenu={handleContextMenu}>
+<div
+	class="[ layout ]"
+	bind:this={layoutEl}
+	on:mouseup={handleMouseUp}
+	on:mousedown={handleMouseDown}
+	on:mousemove={handleMouseMove}
+	on:contextmenu={handleContextMenu}
+>
 	<Desktop />
 
 	<ContextMenu bind:instance={ctx}>
@@ -65,6 +98,17 @@
 		>
 			Change Background
 		</ContextMenuItem>
+
+		{#if $JsOS.selectedUnitUuids.length > 0}
+			<ContextMenuItem
+				action={() => {
+					JsOS.setSelectedUnits(moveSelectedUnitsToBin($JsOS.selectedUnitUuids));
+					return true;
+				}}
+			>
+				Move selected to bin
+			</ContextMenuItem>
+		{/if}
 	</ContextMenu>
 </div>
 
@@ -75,6 +119,8 @@
 	accept="image/*"
 	hidden={true}
 />
+
+<div bind:this={selectBoxEl} class="[ select-box ] [ pos-absolute pointers-none border-radius-bevelled ]"></div>
 
 <style>
 	@import url('../../static/posty.css');

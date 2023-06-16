@@ -19,7 +19,7 @@
 
         background-color: transparent;
 
-        &:is(:hover, :focus-visible) {
+        &:is(:hover, :focus-visible, &[data-selected='true']) {
             border: 1px solid $background;
             background-color: $transparentBackground;
         }

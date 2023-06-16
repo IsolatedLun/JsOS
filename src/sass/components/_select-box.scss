@@ -1,0 +1,8 @@
+@use '../abstracts/' as *;
+
+.select-box {
+    background-color: $select-box-background-clr;
+    border: $select-box-border;
+
+    z-index: $z-index-5;
+}

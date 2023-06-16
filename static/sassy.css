@@ -2623,6 +2623,12 @@ canvas {
   height: 100%;
 }
 
+.select-box {
+  background-color: rgba(48, 154, 207, 0.45);
+  border: 1px solid hsl(200, 62%, 50%);
+  z-index: 9999999;
+}
+
 .button {
   position: relative;
   overflow: hidden;
@@ -2640,7 +2646,7 @@ canvas {
 .button[data-variant=primary][data-attachments*=hologram] {
   background-color: transparent;
 }
-.button[data-variant=primary][data-attachments*=hologram]:is(:hover, :focus-visible) {
+.button[data-variant=primary][data-attachments*=hologram]:is(:hover, :focus-visible, .button[data-variant=primary][data-attachments*=hologram][data-selected=true]) {
   border: 1px solid hsl(200, 62%, 50%);
   background-color: rgba(48, 154, 207, 0.45);
 }
@@ -2690,7 +2696,7 @@ canvas {
 .button[data-variant=secondary][data-attachments*=hologram] {
   background-color: transparent;
 }
-.button[data-variant=secondary][data-attachments*=hologram]:is(:hover, :focus-visible) {
+.button[data-variant=secondary][data-attachments*=hologram]:is(:hover, :focus-visible, .button[data-variant=secondary][data-attachments*=hologram][data-selected=true]) {
   border: 1px solid hsl(0, 0%, 22%);
   background-color: rgba(56, 56, 56, 0.45);
 }
@@ -2740,7 +2746,7 @@ canvas {
 .button[data-variant=exit][data-attachments*=hologram] {
   background-color: transparent;
 }
-.button[data-variant=exit][data-attachments*=hologram]:is(:hover, :focus-visible) {
+.button[data-variant=exit][data-attachments*=hologram]:is(:hover, :focus-visible, .button[data-variant=exit][data-attachments*=hologram][data-selected=true]) {
   border: 1px solid hsl(354, 84%, 55%);
   background-color: rgba(237, 44, 63, 0.45);
 }

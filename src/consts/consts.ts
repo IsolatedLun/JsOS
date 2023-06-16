@@ -10,3 +10,6 @@ export const extensionToIcon: Record<string, string> = {
     
     '': ICON_FILE,
 }
+
+export const ATTR_SYSTEM_FILE = 'data-system-file';
+export const UUID_RECYCLE_BIN = 'recycleBin';

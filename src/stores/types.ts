@@ -5,7 +5,8 @@ import type { Some } from "../types";
 export enum OS_FileTypeEnum {
     FILE,
     RECYCLE,
-    BIN
+    BIN,
+    TXT
 }
 
 export type OS_Unit =  { 
@@ -49,6 +50,7 @@ export interface OS_Preferences {
 
 export interface OS {
     units: OS_Unit[],
+    selectedUnitUuids: string[];
 
     taskbar: {
         references: string[],

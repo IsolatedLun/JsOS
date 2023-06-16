@@ -25,6 +25,7 @@ $z-index-1: 999;
 $z-index-2: 9999;
 $z-index-3: 99999;
 $z-index-4: 999999;
+$z-index-5: 9999999;
 
 // Desktop
 $desktop-grid-file-width: 82px;
@@ -51,6 +52,10 @@ $clr-button-exit: $clr-colors-exit;
 $button-padding: 0.15rem 0.3rem;
 $button-context-menu-padding: 0.3rem 0.6rem;
 $button-window-padding: 0.4rem 0.6rem;
+
+// Modules/SelectBox
+$select-box-border: 1px solid $clr-primary-400;
+$select-box-background-clr: transparentize($clr-primary-400, 0.55);
 
 // Modules/Interactible/Input
 // $clr-input: $clr-background-400;

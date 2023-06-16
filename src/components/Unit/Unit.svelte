@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { extensionToIcon } from '../../consts/consts';
+	import { ATTR_SYSTEM_FILE, UUID_RECYCLE_BIN, extensionToIcon } from '../../consts/consts';
 	import { ICON_FOLDER, ICON_TRASH } from '../../consts/icons';
 	import { JsOS } from '../../stores/os';
 	import { OS_FileTypeEnum, type OS_Unit } from '../../stores/types';
@@ -54,6 +54,7 @@
 	id={props.uuid}
 	cls={cubeCss({ blockClass: 'unit' })}
 	attachments={['hologram', ...attachments]}
+	use={(el) => el.setAttribute(ATTR_SYSTEM_FILE, String(props.isSystemFile))}
 >
 	<Flex cls={cubeCss({ utilClass: 'pointers-none' })} useColumn={true} align="center">
 		<Icon cls={cubeCss({ utilClass: 'fs-600' })} ariaLabel="">
@@ -64,7 +65,7 @@
 				{#if props.type === OS_FileTypeEnum.BIN}
 					{props.uuid === 'recycleBin' ? ICON_TRASH : ICON_FOLDER}
 				{:else}
-					{extensionToIcon[props.extension ?? '']}
+					{extensionToIcon[props.extension ?? ''] ?? extensionToIcon['']}
 				{/if}
 			{/if}
 		</Icon>
@@ -83,7 +84,7 @@
 
 <ContextMenu bind:instance={ctx}>
 	<slot name="contextmenu" />
-	{#if props.parent === 'recycleBin'}
+	{#if props.parent === UUID_RECYCLE_BIN}
 		<ContextMenuItem
 			action={() => {
 				JsOS.restoreUnit(props);
@@ -100,7 +101,7 @@
 		</ContextMenuItem>
 	{:else}
 		<ContextMenuItem action={() => handleFocusRename()}>Rename</ContextMenuItem>
-		{#if props.uuid !== 'recycleBin'}
+		{#if props.uuid !== UUID_RECYCLE_BIN}
 			<ContextMenuItem
 				action={() => {
 					JsOS.recycleUnit(props);
