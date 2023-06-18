@@ -14,12 +14,12 @@ export type OS_Unit =  {
     icon: Some<string>,
     uuid: string, 
     
-    contents: Some<string[] | File>,
+    contents: Some<string[] | string>,
     
     idx: number, 
     isSystemFile: boolean,
-    extension: Some<string>,
 
+    extension: Some<string>,
 
     parent: Some<string>,
     previousParent: Some<string>, 

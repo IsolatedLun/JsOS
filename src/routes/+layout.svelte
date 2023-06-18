@@ -54,7 +54,7 @@
 	<ContextMenu bind:instance={ctx}>
 		<ContextMenuItem
 			action={() => {
-				JsOS.createUnit(createDefaultOsUnit({ type: OS_FileTypeEnum.FILE, contents: new File([], 'New file') }));
+				JsOS.createUnit(createDefaultOsUnit({ type: OS_FileTypeEnum.FILE, contents: 'Hello World' }));
 				return true;
 			}}
 		>

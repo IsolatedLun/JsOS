@@ -1,24 +1,12 @@
 <script lang="ts">
+	import { onMount } from 'svelte';
 	import { JsOS } from '../../../stores/os';
 	import type { OS_Unit } from '../../../stores/types';
 	import Flex from '../../Box/Flex/Flex.svelte';
 	import ContextMenuItem from '../../ContextMenu/ContextMenuItem.svelte';
 	import Unit from '../Unit.svelte';
 
-	function handleFileSave() {
-		if (fileContentEl) {
-			const value = fileContentEl.textContent!;
-			JsOS.saveFile(props, value);
-
-			return true;
-		}
-
-		return false;
-	}
-
 	export let props: OS_Unit;
-
-	let fileContentEl: HTMLElement;
 </script>
 
 <Unit {props}>

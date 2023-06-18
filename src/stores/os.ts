@@ -1,6 +1,6 @@
 import { get, writable } from "svelte/store";
 import { OS_ThemeEnum, type OS, OS_GridLayout, type OS_Unit, OS_FileTypeEnum } from "./types";
-import { _initiateChangeBackground, getExtension } from "./utils";
+import { _initiateChangeBackground, fileToString, getExtension } from "./utils";
 import type { Result, Some } from "../types";
 import { createDefaultOsUnit } from "../utils/defaultCreates";
 import { enumToKeys } from "../utils/general";
@@ -57,12 +57,7 @@ export function createOS() {
         deleteUnit: (unit: OS_Unit) => store.update(os => _deleteUnit(os, unit)),
         deleteAllUnitsFromRecycleBin: () => store.update(os => _deleteAllUnitsFromRecycleBin(os)),
 
-        saveFile: (unit: OS_Unit, contents: string) => store.update((os: OS) => {
-            const unitToUpdate: OS_Unit = os.units[unit.idx];
-            unitToUpdate.contents = new File([contents], unit.name);
-
-            return os;
-        }),
+        saveFile: (unit: OS_Unit, contents: string) => store.update((os: OS) => _saveFile(os, unit, contents)),
 
         // Preferences
         changeBackground: () => _initiateChangeBackground(),
@@ -88,6 +83,12 @@ function _getUnitByIndex(store: OS, idx: number): Result<OS_Unit, string> {
     return store.units[idx];
 }
 
+function _saveFile(store: OS, unit: OS_Unit, contents: string) {
+    store.units[unit.idx].contents = contents;
+
+    return store;
+}
+
 function _createUnit(store: OS, unit: OS_Unit) {
     unit.idx = store.units.length;
 
@@ -106,8 +107,9 @@ function _createUnit(store: OS, unit: OS_Unit) {
 }
 
 function _saveOstoLocalStorage(os: OS) {
-    if(browser && os)
+    if(browser && os) {
         localStorage.setItem('os', JSON.stringify(os));
+    }
 }
 
 function _getOsFromLocalStorage(): Some<OS> {

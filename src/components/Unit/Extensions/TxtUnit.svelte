@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { onMount } from 'svelte';
 	import { JsOS } from '../../../stores/os';
 	import type { OS_Unit } from '../../../stores/types';
 	import Flex from '../../Box/Flex/Flex.svelte';
@@ -33,7 +34,7 @@
 		spellcheck="false"
 		class="[ width-100 height-100 outline-none ]"
 	>
-		Hello, world!
+		{props.contents}
 	</article>
 
 	<div slot="window-contextmenu">
