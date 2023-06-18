@@ -10,6 +10,7 @@
 	import { expandWindow, overlapWindow } from './utils';
 	import ContextMenu from '../../ContextMenu/ContextMenu.svelte';
 	import { positionContextMenu } from '../../ContextMenu/utils';
+	import DragBox from '../../DragBox/DragBox.svelte';
 
 	onMount(() => {
 		// Child windows get stuck to it's parent, so we move every window to the body of the document.
@@ -106,7 +107,13 @@
 	>
 		<Flex cls={cubeCss({utilClass: 'width-100 height-100'})}  useColumn={true} justify='space-between'>
 			<div class="[ content__container ] [ padding-1 overflow-auto ]">
-				<slot name='window-content' />
+				{#if props.contents && props.contents instanceof Array}
+					<DragBox>
+						<slot name='window-content' />
+					</DragBox>
+					{:else}
+						<slot name='window-content' />
+				{/if}
 			</div>
 	
 			<footer class="[ window__footer ] [ width-100 padding-inline-1 ]">

@@ -3,16 +3,31 @@ import { ATTR_SYSTEM_FILE } from "../consts/consts";
 export function drawSelectBox(
 	mouseStart: MouseEvent,
 	mouse: MouseEvent,
+	containerEl: HTMLElement,
 	boxEl: HTMLElement
 ): string[] {
-	boxEl.style.top = mouseStart.y + 'px';
-	boxEl.style.left = mouseStart.x + 'px';
+	const containerRect = containerEl.getBoundingClientRect();
 
-	const boxWidth = -mouseStart.x + mouse.x;
-	const boxHeight = -mouseStart.y + mouse.y;
+	const startX = mouseStart.clientX - containerRect.left;
+    const startY = mouseStart.clientY - containerRect.top;
 
-	boxEl.style.width = boxWidth + 'px';
-	boxEl.style.height = boxHeight + 'px';
+	const currentX = mouse.clientX - containerRect.left;
+    const currentY = mouse.clientY - containerRect.top;
+
+	// ChatGPT
+	// Calculate the dimensions of the selection box
+	const minX = Math.min(startX, currentX);
+	const minY = Math.min(startY, currentY);
+	const maxX = Math.max(startX, currentX);
+	const maxY = Math.max(startY, currentY);
+	const width = maxX - minX;
+	const height = maxY - minY;
+
+	// Update the position and size of the selection box
+	boxEl.style.left = minX + 'px';
+	boxEl.style.top = minY + 'px';
+	boxEl.style.width = width + 'px';
+	boxEl.style.height = height + 'px';
 
 	const selectedUnitUuids: string[] = [];
 	(document.querySelectorAll('.unit') as NodeListOf<HTMLElement>).forEach((unit) => {

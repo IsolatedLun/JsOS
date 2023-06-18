@@ -22,31 +22,14 @@
 </script>
 
 <Unit {props}>
-	<div slot="contextmenu">
-		
-	</div>
-
-	<div
-		bind:this={fileContentEl}
-		slot="window-content"
-		contenteditable="true"
-		spellcheck="false"
-		class="[ width-100 height-100 outline-none ]"
-	>
-		{#if props.contents instanceof File}
-		<Flex>
-			<div class="[ lines ]">
-				<span>1</span>
-			</div>
-
-			{#await props && props.contents.text() then data}
-				<p>{data}</p>
-			{/await}
-		</Flex>
-		{/if}
-	</div>
+	<div slot="contextmenu" />
 
 	<div slot="window-contextmenu">
-		<ContextMenuItem action={handleFileSave}>Save</ContextMenuItem>
+		<ContextMenuItem
+			action={() => {
+				JsOS.renameUnit(props, 'New text File.txt');
+				return true;
+			}}>Convert to text file</ContextMenuItem
+		>
 	</div>
 </Unit>

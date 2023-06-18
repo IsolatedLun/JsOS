@@ -1,10 +1,11 @@
 import { get, writable } from "svelte/store";
 import { OS_ThemeEnum, type OS, OS_GridLayout, type OS_Unit, OS_FileTypeEnum } from "./types";
 import { _initiateChangeBackground, getExtension } from "./utils";
-import type { Result } from "../types";
+import type { Result, Some } from "../types";
 import { createDefaultOsUnit } from "../utils/defaultCreates";
 import { enumToKeys } from "../utils/general";
 import { UUID_RECYCLE_BIN } from "../consts/consts";
+import { browser } from "$app/environment"
 
 export function createOS() {
     let store = writable<OS>({
@@ -64,7 +65,19 @@ export function createOS() {
         }),
 
         // Preferences
-        changeBackground: () => _initiateChangeBackground()
+        changeBackground: () => _initiateChangeBackground(),
+
+        // OS
+        saveOs: () => _saveOstoLocalStorage(get(store)),
+        getOs: () => {
+            const data = _getOsFromLocalStorage();
+            store.update(os => {
+                return data ?? os;
+            });
+
+            return data ? false : true;
+        },
+            
     }
 }
 
@@ -77,6 +90,11 @@ function _getUnitByIndex(store: OS, idx: number): Result<OS_Unit, string> {
 
 function _createUnit(store: OS, unit: OS_Unit) {
     unit.idx = store.units.length;
+
+    if(unit.contents && unit.contents instanceof File) {
+        unit.name = unit.contents.name;
+    }
+
     store.units.push(unit);
     
     const parent = store.units.findIndex(x => x.uuid === unit.parent);
@@ -85,6 +103,19 @@ function _createUnit(store: OS, unit: OS_Unit) {
     }
 
     return store;
+}
+
+function _saveOstoLocalStorage(os: OS) {
+    if(browser && os)
+        localStorage.setItem('os', JSON.stringify(os));
+}
+
+function _getOsFromLocalStorage(): Some<OS> {
+    const osString: Some<string> = localStorage.getItem('os');
+    if(osString)
+        return JSON.parse(osString);
+    return null;
+
 }
 
 function _changeUnitParent(store: OS, unit: OS_Unit, newParent: string) {
@@ -131,7 +162,7 @@ function _deleteAllUnitsFromRecycleBin(store: OS) {
 
 function _renameUnit(store: OS, unit: OS_Unit, name: string) {
     unit.name = name;
-    
+
     if(!unit.isSystemFile && 'extension' in unit) {
         const extension = getExtension(unit.name);
 

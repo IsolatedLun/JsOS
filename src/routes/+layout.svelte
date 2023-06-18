@@ -7,20 +7,23 @@
 	import { JsOS } from '../stores/os';
 	import { OS_FileTypeEnum } from '../stores/types';
 	import { createDefaultOsUnit } from '../utils/defaultCreates';
-	import type { Some } from '../types';
-	import { deselectUnits, drawSelectBox } from '../utils/selectBox';
 	import { moveSelectedUnitsToBin } from '../stores/utils';
 
 	onMount(() => {
-		JsOS.createUnit(
-			createDefaultOsUnit({
-				type: OS_FileTypeEnum.RECYCLE,
-				parent: 'root',
-				uuid: 'recycleBin',
-				name: 'Recycle Bin',
-				isSystemFile: true
-			})
-		);
+		const created = JsOS.getOs();
+		if(created) {
+			JsOS.createUnit(
+				createDefaultOsUnit({
+					type: OS_FileTypeEnum.RECYCLE,
+					parent: 'root',
+					uuid: 'recycleBin',
+					name: 'Recycle Bin',
+					isSystemFile: true
+				})
+			);
+		}
+
+		JsOS.subscribe(() => JsOS.saveOs());
 	});
 
 	function handleContextMenu(e: MouseEvent) {
@@ -38,37 +41,12 @@
 		}
 	}
 
-	function handleMouseDown(e: MouseEvent) {
-		previousMouseEvent = e;
-		isLeftClickDown = true;
-	}
 
-	function handleMouseUp() {
-		isLeftClickDown = false;
-		selectBoxEl.hidden = true;
-	}
-
-	function handleMouseMove(e: MouseEvent) {
-		if(isLeftClickDown) {
-			selectBoxEl.hidden = false;
-			JsOS.setSelectedUnits(drawSelectBox(previousMouseEvent!, e, selectBoxEl));
-		}
-	}
-
-	let layoutEl: HTMLElement;
-	let selectBoxEl: HTMLElement;
 	let ctx: HTMLElement;
-
-	let isLeftClickDown = false;
-	let previousMouseEvent: Some<MouseEvent> = null;
 </script>
 
 <div
 	class="[ layout ]"
-	bind:this={layoutEl}
-	on:mouseup={handleMouseUp}
-	on:mousedown={handleMouseDown}
-	on:mousemove={handleMouseMove}
 	on:contextmenu={handleContextMenu}
 >
 	<Desktop />
@@ -76,7 +54,7 @@
 	<ContextMenu bind:instance={ctx}>
 		<ContextMenuItem
 			action={() => {
-				JsOS.createUnit(createDefaultOsUnit({ type: OS_FileTypeEnum.FILE }));
+				JsOS.createUnit(createDefaultOsUnit({ type: OS_FileTypeEnum.FILE, contents: new File([], 'New file') }));
 				return true;
 			}}
 		>
@@ -119,8 +97,6 @@
 	accept="image/*"
 	hidden={true}
 />
-
-<div bind:this={selectBoxEl} class="[ select-box ] [ pos-absolute pointers-none border-radius-bevelled ]"></div>
 
 <style>
 	@import url('../../static/posty.css');
