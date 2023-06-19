@@ -1,0 +1,7 @@
+@use '../abstracts/' as *;
+
+.card {
+    &[data-variant='primary'] {
+        background-color: $card-primary-background-clr;
+    }
+}

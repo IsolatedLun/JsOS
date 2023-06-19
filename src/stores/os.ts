@@ -33,6 +33,7 @@ export function createOS() {
             os.units[unit.idx] = unit;
             return os
         }),
+        setUnitLocation: (unit: OS_Unit, parentUuid: string) => store.update(os => _changeUnitParent(os, unit, parentUuid)),
         setSelectedUnits: (selectedUnitUuids: string[]) => store.update(os => {
             os.selectedUnitUuids = selectedUnitUuids;
             return os;

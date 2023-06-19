@@ -2635,6 +2635,10 @@ canvas {
   z-index: 9999999;
 }
 
+.card[data-variant=primary] {
+  background-color: hsl(0, 0%, 7%);
+}
+
 .button {
   position: relative;
   overflow: hidden;

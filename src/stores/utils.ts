@@ -26,9 +26,7 @@ export function moveSelectedUnitsToRecycleBin(unitUuids: string[]) {
 export function moveSelectedUnitsToBin(parentUuid: string, unitUuids: string[]) {
     unitUuids.forEach(uuid => {
         const unit = JsOS.getUnitByUuid(uuid);
-        unit.parent = parentUuid;
-
-        JsOS.setUnit(unit);
+        JsOS.setUnitLocation(unit, parentUuid);
     });
     return [];
 }
