@@ -1,6 +1,7 @@
 <script lang='ts'>
 	import { JsOS } from "../../../stores/os";
 	import { OS_FileTypeEnum, type OS_Unit } from "../../../stores/types";
+	import { moveSelectedUnitsToBin } from "../../../stores/utils";
 	import { createDefaultOsUnit } from "../../../utils/defaultCreates";
 	import ContextMenuItem from "../../ContextMenu/ContextMenuItem.svelte";
     import Unit from "../Unit.svelte";
@@ -35,6 +36,16 @@
             }}>
             Create Folder
         </ContextMenuItem>
+        {#if $JsOS.selectedUnitUuids.length > 0}
+			<ContextMenuItem
+				action={() => {
+					JsOS.setSelectedUnits(moveSelectedUnitsToBin(props.uuid, $JsOS.selectedUnitUuids));
+					return true;
+				}}
+			>
+				Move selected to here
+			</ContextMenuItem>
+		{/if}
     </div>
 
     <div slot='window-footer'>

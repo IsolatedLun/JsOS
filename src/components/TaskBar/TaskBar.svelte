@@ -7,7 +7,7 @@
 <div class="[ taskbar ] [ margin-inline-auto border-radius-max ]">
     <Flex cls={cubeCss({utilClass: 'margin-inline-3'})} align='center'>
         <div class="[ taskbar-grid ] [ grid ]">
-            <Unit />
+            
         </div>
     </Flex>
 </div>

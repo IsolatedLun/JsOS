@@ -34,6 +34,10 @@ $text-alignments: start, center, end;
 	height: 100%;
 }
 
+.height-max-content {
+	height: max-content;
+}
+
 .overflow-hidden {
 	overflow: hidden;
 }

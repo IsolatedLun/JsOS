@@ -7,7 +7,8 @@
 	import { JsOS } from '../stores/os';
 	import { OS_FileTypeEnum } from '../stores/types';
 	import { createDefaultOsUnit } from '../utils/defaultCreates';
-	import { moveSelectedUnitsToBin } from '../stores/utils';
+	import { moveSelectedUnitsToBin, moveSelectedUnitsToRecycleBin } from '../stores/utils';
+	import { UUID_ROOT } from '../consts/consts';
 
 	onMount(() => {
 		const created = JsOS.getOs();
@@ -15,7 +16,7 @@
 			JsOS.createUnit(
 				createDefaultOsUnit({
 					type: OS_FileTypeEnum.RECYCLE,
-					parent: 'root',
+					parent: UUID_ROOT,
 					uuid: 'recycleBin',
 					name: 'Recycle Bin',
 					isSystemFile: true
@@ -30,7 +31,7 @@
 		e.preventDefault();
 
 		const target = e.target as HTMLElement;
-		if (target.classList.contains('unit-grid')) positionContextMenu(ctx, e);
+		if (!target.closest('.unit') && target.closest('.layout')) positionContextMenu(ctx, e);
 	}
 
 	function handleBackgroundInput(e: Event) {
@@ -80,11 +81,19 @@
 		{#if $JsOS.selectedUnitUuids.length > 0}
 			<ContextMenuItem
 				action={() => {
-					JsOS.setSelectedUnits(moveSelectedUnitsToBin($JsOS.selectedUnitUuids));
+					JsOS.setSelectedUnits(moveSelectedUnitsToRecycleBin($JsOS.selectedUnitUuids));
 					return true;
 				}}
 			>
 				Move selected to bin
+			</ContextMenuItem>
+			<ContextMenuItem
+				action={() => {
+					JsOS.setSelectedUnits(moveSelectedUnitsToBin('root', $JsOS.selectedUnitUuids));
+					return true;
+				}}
+			>
+				Move selected to here
 			</ContextMenuItem>
 		{/if}
 	</ContextMenu>

@@ -1,7 +1,9 @@
 <script lang='ts'>
+	import { UUID_ROOT } from "../../../consts/consts";
 	import { ICON_TRASH } from "../../../consts/icons";
 	import { JsOS } from "../../../stores/os";
 	import { OS_FileTypeEnum, type OS_Unit } from "../../../stores/types";
+	import { deleteSelectedUnits, moveSelectedUnitsToBin, restoreSelectedUnits } from "../../../stores/utils";
 	import { createDefaultOsUnit } from "../../../utils/defaultCreates";
 	import ContextMenuItem from "../../ContextMenu/ContextMenuItem.svelte";
     import Unit from "../Unit.svelte";
@@ -33,6 +35,24 @@
             }}>
             Delete all files
         </ContextMenuItem>
+        {#if $JsOS.selectedUnitUuids.length > 0}
+			<ContextMenuItem
+				action={() => {
+					JsOS.setSelectedUnits(restoreSelectedUnits($JsOS.selectedUnitUuids));
+					return true;
+				}}
+			>
+				Restore selected
+			</ContextMenuItem>
+            <ContextMenuItem
+				action={() => {
+					JsOS.setSelectedUnits(deleteSelectedUnits($JsOS.selectedUnitUuids));
+					return true;
+				}}
+			>
+				Delete selected
+			</ContextMenuItem>
+		{/if}
     </div>
 
     <div slot='window-footer'>

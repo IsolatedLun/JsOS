@@ -2469,6 +2469,10 @@ canvas {
   height: 100%;
 }
 
+.height-max-content {
+  height: max-content;
+}
+
 .overflow-hidden {
   overflow: hidden;
 }
@@ -2615,6 +2619,8 @@ canvas {
 .window .window__content {
   width: 100%;
   height: 100%;
+  max-width: 95vw;
+  max-height: 95vh;
   border: 2px solid hsl(0, 0%, 15%);
   background-color: hsl(0, 0%, 7%);
 }

@@ -12,12 +12,41 @@ export function _initiateChangeBackground() {
     imgInput.click();
 }
 
-export function moveSelectedUnitsToBin(unitUuids: string[]) {
+// ===========================================
+// DISCLAIMER: 
+// Yes, I can pass in the unit indexes instead of the uuids and avoiding looping through all units
+// But, deal with it.
+export function moveSelectedUnitsToRecycleBin(unitUuids: string[]) {
     unitUuids.forEach(uuid => {
         JsOS.recycleUnit(JsOS.getUnitByUuid(uuid));
     });
     return [];
 }
+
+export function moveSelectedUnitsToBin(parentUuid: string, unitUuids: string[]) {
+    unitUuids.forEach(uuid => {
+        const unit = JsOS.getUnitByUuid(uuid);
+        unit.parent = parentUuid;
+
+        JsOS.setUnit(unit);
+    });
+    return [];
+}
+
+export function deleteSelectedUnits(unitUuids: string[]) {
+    unitUuids.forEach(uuid => {
+        JsOS.deleteUnit(JsOS.getUnitByUuid(uuid));
+    });
+    return [];
+}
+
+export function restoreSelectedUnits(unitUuids: string[]) {
+    unitUuids.forEach(uuid => {
+        JsOS.restoreUnit(JsOS.getUnitByUuid(uuid));
+    });
+    return [];
+}
+// ===========================================
 
 export async function fileToString(file: File): Promise<Some<string>> {
     return new Promise((resolve, reject) => {
